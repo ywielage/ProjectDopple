@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".SessionsActivity">
+    <RelativeLayout
+        android:id="@+id/mLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        android:padding="30dp"
+        tools:layout_editor_absoluteY="230dp">
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:srcCompat="@drawable/back_arrow" />
+        <LinearLayout
+            android:id="@+id/topMenu"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:srcCompat="@drawable/bluetooth_connected"
+                android:layout_alignBaseline="@+id/backButton"/>
+            <TextView
+                android:id="@+id/deviceName"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Bram's oortjes"
+                android:textSize="18dp"
+                android:textColor="#1ACE78"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_alignBaseline="@+id/backButton"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/filesTitle"
+            android:layout_below="@id/topMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:text="Bestanden"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            android:textSize="36dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="16dp"
+            android:textAlignment="textStart" />
+        <ListView
+            android:id="@+id/sessionList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="127dp"
+            android:layout_marginBottom="50dp" />
+
+        <TextView
+            android:id="@+id/uuidTextField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="15dp"
+            android:text="TextView" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
