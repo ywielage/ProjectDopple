@@ -270,4 +270,14 @@ public class DoppleConversion {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         return 6371 * c;
     }
+
+    public int getFlightTime(int timeInSeconds, int contactTime, int steps)
+    {
+        return timeInSeconds - contactTime / steps;
+    }
+
+    public double getDutyFactor(int contactTime, double flightTime)
+    {
+        return contactTime / (2 * (contactTime + flightTime));
+    }
 }
