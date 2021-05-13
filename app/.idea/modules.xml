@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-853774873/DoppleApp.iml" filepath="$PROJECT_DIR$/.idea/modules/-853774873/DoppleApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/DoppleApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/DoppleApp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1087767833/ProjectDopple-DoppleApp.iml" filepath="$PROJECT_DIR$/.idea/modules/-1087767833/ProjectDopple-DoppleApp.iml" group="DoppleApp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app.iml" group="DoppleApp/app" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "applicationId": "com.inf2c.doppleapp",
+  "variantType": "BASE_APK",
+  "elements": [
+    {
+      "outputType": {
+        "type": "MERGED_MANIFESTS"
+      },
+      "apkData": {
+        "type": "MAIN",
+        "splits": [],
+        "versionCode": 6,
+        "versionName": "1.6",
+        "outputFile": "app-debug.apk",
+        "fullName": "debug",
+        "baseName": "debug",
+        "dirName": ""
+      },
+      "path": "AndroidManifest.xml",
+      "properties": {
+        "packageId": "com.inf2c.doppleapp",
+        "split": "",
+        "minSdkVersion": "21"
+      }
+    }
+  ]
+}
