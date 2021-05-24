@@ -1,6 +1,7 @@
 package com.inf2c.doppleapp.TestRun;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,5 +12,10 @@ public class TestRun extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_run);
+
+        TextView actualTimeTv = (TextView) findViewById(R.id.TvActualTime);
+
+
+        actualTimeTv.setText("Dit is een test");
     }
 }
