@@ -15,7 +15,6 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,6 @@ import com.inf2c.doppleapp.logging.DoppleLog;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -210,7 +208,7 @@ public class DataActivity extends AppCompatActivity {
             }
         });
 
-        sessionBtn = findViewById(R.id.sessionBtn);
+        sessionBtn = findViewById(R.id.testSessionBtn);
         sessionBtnLabel = findViewById(R.id.lblSessionControl);
         lapActualTimeLabel = findViewById(R.id.lapActualTime);
         lapTimeLabel = findViewById(R.id.lapTime);

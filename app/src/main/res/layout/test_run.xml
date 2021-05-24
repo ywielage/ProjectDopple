@@ -18,7 +18,7 @@
         tools:layout_editor_absoluteX="0dp">
 
         <RelativeLayout
-            android:id="@+id/sessionBtn"
+            android:id="@+id/testSessionBtn"
             android:layout_width="200dp"
             android:layout_height="48dp"
             android:layout_centerHorizontal="true"
@@ -56,4 +56,31 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Actuele tijd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contacttijd"
+        tools:layout_editor_absoluteX="174dp"
+        tools:layout_editor_absoluteY="120dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zweeftijd"
+        tools:layout_editor_absoluteX="180dp"
+        tools:layout_editor_absoluteY="176dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
