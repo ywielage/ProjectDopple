@@ -8,6 +8,10 @@ Het idee is om een 2d game te maken waarin de speler zich verplaatst door een pr
 
 ## **Development Framework** 
 
+Om dit idee tot werkelijkheid te laten komen, zal er gebruik worden gemaakt van een Development Framework. Een development framework is essentieel voor het creëren van het idee. 
+
+Voor dit project is er besloten om gebruik te maken van Duality 2D. Duality 2D is een modulaire game engine, welke volledig geschreven is in C#. Duality 2D heeft een visuele editor, welke goed van pas gaat komen wanneer de game zal worden geïmplementeerd. Daarnaast zal alle code worden geschreven in C#. De visuele elementen worden dan geïmplementeerd binnen de editor, maar alle logica rondom de werking van de game wordt geschreven in C#. 
+
 ## **Planning**
 
 De planning is te vinden in het bijgevoegde Excel bestand.
