@@ -39,6 +39,7 @@ dependencies {
     implementation 'org.jetbrains:annotations-java5:15.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.opencsv:opencsv:4.6'
 }
 
 task wrapper(type: Wrapper){
