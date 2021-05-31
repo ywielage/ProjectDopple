@@ -16,6 +16,7 @@ import com.opencsv.CSVReader;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class TestRun extends AppCompatActivity {
 
@@ -39,21 +40,23 @@ public class TestRun extends AppCompatActivity {
         testSessionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                actualTimeTv.setText(getSessionDataCSV());
+                actualTimeTv.setText(getSessionDataCSV(3, 0));
             }
         });
     }
 
-    public String getSessionDataCSV() {
+    public String getSessionDataCSV(int line, int element) {
+        ArrayList data = new ArrayList();
         try {
             CSVReader reader = new CSVReader(new InputStreamReader(getResources().openRawResource(R.raw.dopplesession)));
             String[] nextLine;
             while ((nextLine = reader.readNext()) != null)
-                return nextLine[1];
+                data.add(nextLine);
             } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        String [] result = (String[]) data.get(line);
+        return result[element];
     }
 }
 
