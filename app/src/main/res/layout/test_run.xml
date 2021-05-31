@@ -8,84 +8,867 @@
     >
 
     <RelativeLayout
-        android:id="@+id/sessionStart"
+        android:id="@+id/mLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="84dp"
-        android:padding="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="0dp">
 
         <RelativeLayout
-            android:id="@+id/testSessionBtn"
-            android:layout_width="200dp"
-            android:layout_height="48dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/blue_round_btn"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+            android:id="@+id/doppleMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp">
 
             <ImageView
-                android:id="@+id/sessionBtnLogo"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/play_icon" />
+                android:id="@+id/backButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:srcCompat="@drawable/back_arrow" />
+
+            <ImageView
+                android:id="@+id/viewSessionButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:padding="1dp"
+                app:srcCompat="@drawable/folder" />
 
             <LinearLayout
+                android:id="@+id/topMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignBaseline="@+id/backButton"
+                    app:srcCompat="@drawable/bluetooth_connected" />
+
                 <TextView
-                    android:id="@+id/lblSessionControl"
+                    android:id="@+id/deviceName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:background="@android:color/transparent"
-                    android:text="Start testsessie"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16dp"
+                    android:layout_alignBaseline="@+id/backButton"
+                    android:layout_marginLeft="5dp"
+                    android:text="Marvins oortjes"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#1ACE78"
+                    android:textSize="18dp"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
 
+        <com.inf2c.doppleapp.carousel.Carousel
+            android:id="@+id/mainCarousel"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/sessionStart"
+            android:layout_below="@id/doppleMenu">
+
+
+            <LinearLayout
+                android:id="@+id/innerLay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="#ffffff"
+                        android:text="Ronden"
+                        android:textAlignment="textStart"
+                        android:textColor="#333333"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/lapCurrent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="45dp"
+                        android:paddingBottom="45dp">
+
+                        <TextView
+                            android:id="@+id/testLapTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="0:26:09"
+                            android:textAlignment="center"
+                            android:textSize="26dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="2dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="100px"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="#"
+                            android:textSize="22dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="300px"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:padding="2dp"
+                            android:text="Duur"
+                            android:textAlignment="center"
+                            android:textSize="22dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="300px"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:padding="2dp"
+                            android:text="Einde"
+                            android:textAlignment="center"
+                            android:textSize="22dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <ScrollView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/lapList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        </LinearLayout>
+                    </ScrollView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minWidth="200dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <TextView
+                        android:id="@+id/bluetoothTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="#ffffff"
+                        android:text="Beweging"
+                        android:textAlignment="textStart"
+                        android:textColor="#333333"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/dataWrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/bluetoothTitle"
+                        android:layout_marginBottom="12dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/distance_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Afstand"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/distance_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/TestDistance_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="9,8"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/distance_unit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@+id/TestDistance_value"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginEnd="89dp"
+                                    android:layout_toRightOf="@+id/TestDistance_value"
+                                    android:text="km"
+                                    android:textColor="#777777"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/speed_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Snelheid"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/speed_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/TestSpeed_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="14,5"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/speed_unit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@+id/TestSpeed_value"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginEnd="55dp"
+                                    android:layout_toRightOf="@+id/TestSpeed_value"
+                                    android:text="km/h"
+                                    android:textColor="#777777"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/dataWrapper2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/bluetoothTitle"
+                        android:layout_marginBottom="12dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/heartbeat_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Hartslag"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/heartbeat_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/TestHeartbeat_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="178"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/heartbeat_unit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@+id/TestHeartbeat_value"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginEnd="74dp"
+                                    android:layout_toRightOf="@+id/TestHeartbeat_value"
+                                    android:text="bpm"
+                                    android:textColor="#777777"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/contact_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Contact Tijd"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/contact_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/TestContact_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="403"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/contact_unit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@+id/TestContact_value"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginLeft="-254dp"
+                                    android:layout_marginEnd="344dp"
+                                    android:layout_toRightOf="@+id/TestContact_value"
+                                    android:text="ms"
+                                    android:textColor="#777777"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minWidth="200dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <TextView
+                        android:id="@+id/stepsTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="#ffffff"
+                        android:text="Stappen"
+                        android:textAlignment="textStart"
+                        android:textColor="#333333"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/stepsDataWrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/bluetoothTitle"
+                        android:layout_marginBottom="12dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/amount_steps_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Aantal"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/amount_steps_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/TestAmount_steps_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="9,8"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/Test_steps_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toRightOf="@+id/TestAmount_steps_value"
+                                    android:src="@drawable/steps_icon" />
+
+
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/stepfreq_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Frequentie"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/stepfreq_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/TestStepfreq_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="000"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/stepfreq_unit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@+id/TestStepfreq_value"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_toRightOf="@+id/TestStepfreq_value"
+                                    android:text="ms"
+                                    android:textColor="#777777"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/stepsDataWrapper2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/maxstepfreq_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Freq Max"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/maxstepfreq_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/TestMaxstepfreq_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="000"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/maxstepfreq_unit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@+id/TestMaxstepfreq_value"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_toRightOf="@+id/TestMaxstepfreq_value"
+                                    android:text="ms"
+                                    android:textColor="#777777"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/minstepfreq_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Freq Min"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/minstepfreq_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/Testminstepfreq_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="000"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/minstepfreq_unit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@+id/Testminstepfreq_value"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_toRightOf="@+id/Testminstepfreq_value"
+                                    android:text="ms"
+                                    android:textColor="#777777"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/stepsDataWrapper3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/avgstepfreq_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Freq Gem"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/avgstepfreq_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/TestAvgstepfreq_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="000"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/avgstepfreq_unit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@+id/TestAvgstepfreq_value"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_toRightOf="@+id/TestAvgstepfreq_value"
+                                    android:text="ms"
+                                    android:textColor="#777777"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minWidth="200dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <TextView
+                        android:id="@+id/accelerometerTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="#ffffff"
+                        android:text="Accelerometer"
+                        android:textAlignment="textStart"
+                        android:textColor="#333333"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/rawDataWrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/accelerometerTitle"
+                        android:baselineAligned="false"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/x_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="X-as"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/x_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/TestX_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0.90"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/y_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Y-as"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/y_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/TestY_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0.12"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/z_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Z-as"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/z_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/TestZ_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0.23"
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.inf2c.doppleapp.carousel.Carousel>
+
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/greyline"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="1dp"-->
+        <!--            android:layout_below="@+id/mainCarousel"-->
+        <!--            android:layout_marginTop="14dp"-->
+        <!--            android:layout_marginBottom="10dp"-->
+        <!--            android:background="#d8d8d8" />-->
+
+        <RelativeLayout
+            android:id="@+id/sessionStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="30dp">
+
+            <RelativeLayout
+                android:id="@+id/testStartSessionBtn"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/blue_round_btn"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <ImageView
+                    android:id="@+id/testSessionBtnLogo"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/play_icon" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblTestSessionControl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:background="@android:color/transparent"
+                        android:text="Start sessie"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            android
+        </RelativeLayout>
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/TvActualTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="Actuele tijd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/TvContactTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Contacttijd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TvActualTime" />
-
-    <TextView
-        android:id="@+id/TvFloatTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:text="Zweeftijd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TvContactTime" />
 </androidx.constraintlayout.widget.ConstraintLayout>
