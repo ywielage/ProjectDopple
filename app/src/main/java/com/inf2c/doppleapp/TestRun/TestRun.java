@@ -1,6 +1,9 @@
 package com.inf2c.doppleapp.TestRun;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,11 +15,14 @@ import com.opencsv.CSVReader;
 
 import java.io.IOException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 
 public class TestRun extends AppCompatActivity {
 
     TextView actualTimeTv;
+    RelativeLayout testSessionBtn;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,26 +32,28 @@ public class TestRun extends AppCompatActivity {
 
         actualTimeTv.setText("Dit is een test");
 
-        actualTimeTv.setText(getSessionDataCSV());
+        actualTimeTv.setText("Test");
+
+        testSessionBtn = (RelativeLayout) findViewById(R.id.testSessionBtn);
+
+        testSessionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actualTimeTv.setText(getSessionDataCSV());
+            }
+        });
     }
 
-    public StringBuffer getSessionDataCSV() {
-        StringBuffer data = null;
+    public String getSessionDataCSV() {
         try {
-            CSVReader reader = new CSVReader(new FileReader(String.valueOf(R.raw.dopplesession)));
+            CSVReader reader = new CSVReader(new InputStreamReader(getResources().openRawResource(R.raw.dopplesession)));
             String[] nextLine;
-            while ((nextLine = reader.readNext()) != null) {
-                data.append(nextLine[0]);
-            }
-        } catch (IOException e) {
+            while ((nextLine = reader.readNext()) != null)
+                return nextLine[1];
+            } catch (IOException e) {
             e.printStackTrace();
         }
-        if(data != null) {
-            return data;
-        } else {
-            StringBuffer sb = new StringBuffer();
-            sb.append("Cannot read data");
-            return sb;
-        }
+        return null;
     }
 }
+
