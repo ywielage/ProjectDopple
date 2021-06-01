@@ -25,20 +25,36 @@ public class TestXMLParser {
             in.close();
         }
     }
+
+    /*
+    Test run code
+    InputStream object = this.getResources().openRawResource(R.raw.dopple_session_20210511164705_1);
+        TestXMLParser parser = new TestXMLParser();
+
+        try {
+            System.out.println("==============================");
+            List list = parser.parse(object);
+            System.out.println("==============================" + list.size());
+
+        } catch (XmlPullParserException | IOException e) {
+            e.printStackTrace();
+        }
+     */
+
     private List readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
         List entries = new ArrayList();
 
-        parser.require(XmlPullParser.START_TAG, ns, "Activity");
+        parser.require(XmlPullParser.START_TAG, ns, "TrainingCenterDatabase");
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
+            System.out.println("H");
             String name = parser.getName();
             // Starts by looking for the entry tag
             if (name.equals("Trackpoint")) {
+
                 entries.add(readEntry(parser));
-            } else {
-                skip(parser);
             }
         }
         return entries;
@@ -58,6 +74,7 @@ public class TestXMLParser {
         String time = null;
 //        String summary = null;
 //        String link = null;
+        System.out.println(parser.getName());
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
