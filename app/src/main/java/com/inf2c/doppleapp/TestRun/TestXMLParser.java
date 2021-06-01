@@ -1,7 +1,5 @@
 package com.inf2c.doppleapp.TestRun;
 
-import com.inf2c.doppleapp.jsonConversion.models.Track.Track;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -21,16 +19,18 @@ public class TestXMLParser {
     TestXMLParser parser = new TestXMLParser();
 
     System.out.println("==============================");
-    List list = parser.parse(object);
-    System.out.println("==============================" + list.size());
+    List<Trackpoint> list = parser.parse(object);
+    System.out.println(list.get(500).getContactTime());
+    System.out.println("Items in list " + list.size());
+    System.out.println("==============================");
      */
 
-    private List<Trackpoint> employees= new ArrayList<Trackpoint>();
-    private Trackpoint employee;
+    private List<Trackpoint> trackpoints = new ArrayList<Trackpoint>();
+    private Trackpoint trackpoint;
     private String text;
 
-    public List<Trackpoint> getEmployees() {
-        return employees;
+    public List<Trackpoint> getTrackpoints() {
+        return trackpoints;
     }
 
     public List<Trackpoint> parse(InputStream is) {
@@ -48,7 +48,7 @@ public class TestXMLParser {
                     case XmlPullParser.START_TAG:
                         if (tagname.equalsIgnoreCase("Trackpoint")) {
                             // create a new instance of employee
-                            employee = new Trackpoint();
+                            trackpoint = new Trackpoint();
                         }
                         break;
 
@@ -57,18 +57,46 @@ public class TestXMLParser {
                         break;
 
                     case XmlPullParser.END_TAG:
-                        if (tagname.equalsIgnoreCase("Trackpoint")) {
-                            // add employee object to list
-                            employees.add(employee);
-                        }else if (tagname.equalsIgnoreCase("Time")) {
-                            employee.setId(Integer.parseInt(text));
-                        }  else if (tagname.equalsIgnoreCase("LongitudeDegrees")) {
-                            employee.setName(text);
-                        } else if (tagname.equalsIgnoreCase("LatitudeDegrees")) {
-                            employee.setSalary(Float.parseFloat(text));
+                        if(trackpoint != null && !text.equals("")) {
+                            switch(tagname) {
+                                case "Trackpoint":
+                                    trackpoints.add(trackpoint);
+                                    break;
+                                case "Time":
+                                    trackpoint.setTime(Long.parseLong(text));
+                                    break;
+                                case "LongitudeDegrees":
+                                    trackpoint.setLongitudeDegrees(Float.parseFloat(text));
+                                    break;
+                                case "LatitudeDegrees":
+                                    trackpoint.setLatitudeDegrees(Float.parseFloat(text));
+                                    break;
+//                                case "AltitudeMeters":
+//                                    trackpoint.setAltitudeMeters(Float.parseFloat(text));
+//                                    break;
+//                                case "DistanceMeters":
+//                                    trackpoint.setDistanceMeters(Float.parseFloat(text));
+//                                    break;
+                                case "Value":
+                                    trackpoint.setHeartRateBpm(Integer.parseInt(text));
+                                    break;
+                                case "ContactTime":
+                                    trackpoint.setContactTime(Integer.parseInt(text));
+                                    break;
+                                case "EarbudsTimeStamp":
+                                    trackpoint.setEarbudsTimeStamp(Float.parseFloat(text));
+                                    break;
+                                case "StepFrequency":
+                                    trackpoint.setStepFrequency(Integer.parseInt(text));
+                                    break;
+                                case "Steps":
+                                    trackpoint.setSteps(Integer.parseInt(text));
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                         break;
-
                     default:
                         break;
                 }
@@ -78,6 +106,6 @@ public class TestXMLParser {
         } catch (XmlPullParserException e) {e.printStackTrace();}
         catch (IOException e) {e.printStackTrace();}
 
-        return employees;
+        return trackpoints;
     }
 }
