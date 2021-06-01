@@ -138,6 +138,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/durationTv"
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"

@@ -609,7 +609,7 @@ public class DataActivity extends AppCompatActivity {
      * Function that toggles the recording of Earbud data
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void startRecordingSession(){
+    public void startRecordingSession(){
         if(!isRecording){
             setupView();
             sessionBtnImage.setImageResource(R.drawable.stop_icon_2);
