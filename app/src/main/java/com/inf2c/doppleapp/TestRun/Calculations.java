@@ -72,4 +72,19 @@ public class Calculations {
         }
         return "Min step frequency: " + minStepFreq + "\nMax step frequency: " + maxStepFreq  + "\nAverage step frequency: " + avgStepFreq;
     }
+
+    public static Time getTimeRan(List<Trackpoint> list)
+    {
+        return new Time((list.get(list.size()-1).getTime() - list.get(0).getTime()) - 3600000);
+    }
+
+    public static int getFlightTime(int timeInSeconds, int contactTime, int steps)
+    {
+        return timeInSeconds - contactTime / steps;
+    }
+
+    public static double getDutyFactor(int contactTime, double flightTime)
+    {
+        return contactTime / (2 * (contactTime + flightTime));
+    }
 }
