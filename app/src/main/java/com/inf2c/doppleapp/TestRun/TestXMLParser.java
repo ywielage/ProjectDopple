@@ -18,10 +18,14 @@ public class TestXMLParser {
     InputStream object = this.getResources().openRawResource(R.raw.dopple_session_20210511164705_1);
     TestXMLParser parser = new TestXMLParser();
 
-    System.out.println("==============================");
     List<Trackpoint> list = parser.parse(object);
-    System.out.println(list.get(500).getContactTime());
-    System.out.println("Items in list " + list.size());
+    Calculations calculations = new Calculations();
+
+    System.out.println("==============================");
+    System.out.println(list.get(0).getEarbudsTimeStamp());
+    System.out.println(calculations.getStepFreqs(list));
+    System.out.println("Distance in km: " + calculations.getTotalDistance(list));
+    System.out.println("Items in list: " + list.size());
     System.out.println("==============================");
      */
 
@@ -83,7 +87,7 @@ public class TestXMLParser {
                                 case "ContactTime":
                                     trackpoint.setContactTime(Integer.parseInt(text));
                                     break;
-                                case "EarbudsTimeStamp":
+                                case "EarbudsTimestamp":
                                     trackpoint.setEarbudsTimeStamp(Float.parseFloat(text));
                                     break;
                                 case "StepFrequency":
