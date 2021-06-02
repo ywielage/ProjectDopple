@@ -1,8 +1,6 @@
 package com.inf2c.doppleapp.TestRun;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,25 +10,16 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import com.inf2c.doppleapp.DataActivity;
 import com.inf2c.doppleapp.R;
 
 
-import com.inf2c.doppleapp.SessionsActivity;
 import com.inf2c.doppleapp.ble.BLEConnectionService;
-import com.inf2c.doppleapp.heart_rate.BLEHeartRateService;
-import com.inf2c.doppleapp.heart_rate.HeartBeat;
 import com.opencsv.CSVReader;
 
 import java.io.IOException;
-import java.io.FileReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TestRun extends AppCompatActivity {
 
@@ -38,6 +27,14 @@ public class TestRun extends AppCompatActivity {
     private RelativeLayout testSessionBtn;
     private TextView testLapTime;
     private boolean isRecording = false;
+
+    private TextView distanceValueTV;
+    private TextView speedValueTV;
+    private TextView heartbeatValue;
+    private TextView contactTimeValue;
+    private TextView flightTimeValue;
+    private TextView dutyFactorValue;
+
 
     @SuppressLint("ResourceType")
     @Override
@@ -48,6 +45,13 @@ public class TestRun extends AppCompatActivity {
         durationTv = (TextView) findViewById(R.id.durationTv);
         testSessionBtn = (RelativeLayout) findViewById(R.id.testStartSessionBtn);
         testLapTime = (TextView) findViewById(R.id.testLapTime);
+
+        distanceValueTV = (TextView) findViewById(R.id.distance_value);
+        speedValueTV = (TextView) findViewById(R.id.speed_value);
+        heartbeatValue = (TextView) findViewById(R.id.heartBeatValue);
+        contactTimeValue = (TextView) findViewById(R.id.contactTimeValue);
+        flightTimeValue = (TextView) findViewById(R.id.flightTime_value);
+        dutyFactorValue = (TextView) findViewById(R.id.dutyFactor_value);
 
 
         testSessionBtn.setOnClickListener(new View.OnClickListener() {

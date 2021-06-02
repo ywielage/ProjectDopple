@@ -327,7 +327,7 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:id="@+id/TestHeartbeat_value"
+                                    android:id="@+id/heartBeatValue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="178"
@@ -339,11 +339,11 @@
                                     android:id="@+id/heartbeat_unit"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignBaseline="@+id/TestHeartbeat_value"
+                                    android:layout_alignBaseline="@+id/heartBeatValue"
                                     android:layout_alignParentEnd="true"
                                     android:layout_marginLeft="2dp"
                                     android:layout_marginEnd="74dp"
-                                    android:layout_toRightOf="@+id/TestHeartbeat_value"
+                                    android:layout_toRightOf="@+id/heartBeatValue"
                                     android:text="bpm"
                                     android:textColor="#777777"
                                     android:textSize="20dp"
@@ -374,7 +374,7 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:id="@+id/TestContact_value"
+                                    android:id="@+id/contactTimeValue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="403"
@@ -386,11 +386,11 @@
                                     android:id="@+id/contact_unit"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignBaseline="@+id/TestContact_value"
+                                    android:layout_alignBaseline="@+id/contactTimeValue"
                                     android:layout_alignParentEnd="true"
                                     android:layout_marginLeft="-254dp"
                                     android:layout_marginEnd="344dp"
-                                    android:layout_toRightOf="@+id/TestContact_value"
+                                    android:layout_toRightOf="@+id/contactTimeValue"
                                     android:text="ms"
                                     android:textColor="#777777"
                                     android:textSize="20dp"
