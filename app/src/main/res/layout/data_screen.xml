@@ -490,7 +490,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/stepfreq_title"
+                                android:id="@+id/avgstepfreq_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Frequentie"
@@ -501,7 +501,7 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/stepfreq_title"
+                                android:layout_below="@id/avgstepfreq_title"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 

@@ -18,8 +18,11 @@ import com.inf2c.doppleapp.ble.BLEConnectionService;
 import com.opencsv.CSVReader;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TestRun extends AppCompatActivity {
 
@@ -35,6 +38,11 @@ public class TestRun extends AppCompatActivity {
     private TextView flightTimeValue;
     private TextView dutyFactorValue;
 
+    private TextView stepCountValue;
+    private TextView stepMinFreqValue;
+    private TextView stepMaxFreqValue;
+    private TextView stepAvgFreqValue;
+
 
     @SuppressLint("ResourceType")
     @Override
@@ -42,6 +50,11 @@ public class TestRun extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_run);
 
+        InputStream object = this.getResources().openRawResource(R.raw.dopple_session_20210511164705_1);
+        TestXMLParser parser = new TestXMLParser();
+        List<Trackpoint> list = parser.parse(object);
+
+        //Get field ids
         durationTv = (TextView) findViewById(R.id.durationTv);
         testSessionBtn = (RelativeLayout) findViewById(R.id.testStartSessionBtn);
         testLapTime = (TextView) findViewById(R.id.testLapTime);
@@ -53,6 +66,28 @@ public class TestRun extends AppCompatActivity {
         flightTimeValue = (TextView) findViewById(R.id.flightTime_value);
         dutyFactorValue = (TextView) findViewById(R.id.dutyFactor_value);
 
+        stepCountValue = (TextView) findViewById(R.id.TestAmount_steps_value);
+        stepMinFreqValue = (TextView) findViewById(R.id.Testminstepfreq_value);
+        stepMaxFreqValue = (TextView) findViewById(R.id.TestMaxstepfreq_value);
+        stepAvgFreqValue = (TextView) findViewById(R.id.TestAvgstepfreq_value);
+
+        //Set field values
+        Time timeRan = Calculations.getTimeRan(list);
+        double totalDistance = Math.round(Calculations.getTotalDistance(list) * 100.0) / 100.0;
+        StepFreqs stepsFreq = Calculations.getStepFreqs(list);
+
+        durationTv.setText(timeRan.toString());
+        distanceValueTV.setText(Double.toString(totalDistance));
+        speedValueTV.setText(Calculations.getSpeed(timeRan, totalDistance));
+        heartbeatValue.setText(Integer.toString(Calculations.getAverageHeartRateBpm(list)));
+        contactTimeValue.setText(Integer.toString(Calculations.getAverageContactTime(list)));
+        flightTimeValue.setText(Long.toString(Calculations.getAverageFlightTime(list)));
+        dutyFactorValue.setText(Double.toString(Calculations.getAverageDutyFactor(list)));
+
+        stepCountValue.setText(Integer.toString(Calculations.getTotalStepCount(list)));
+        stepMinFreqValue.setText(Integer.toString(stepsFreq.getMinStepFreq()));
+        stepMaxFreqValue.setText(Integer.toString(stepsFreq.getMaxStepFreq()));
+        stepAvgFreqValue.setText(Integer.toString(stepsFreq.getAvgStepFreq()));
 
         testSessionBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)

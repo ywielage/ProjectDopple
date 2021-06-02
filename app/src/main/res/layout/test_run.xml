@@ -114,7 +114,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
-                            android:text="0:26:09"
+                            android:text="0:39:20"
                             android:textAlignment="center"
                             android:textSize="26dp"
                             android:textStyle="bold" />
@@ -580,10 +580,10 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/stepfreq_title"
+                                android:id="@+id/avgstepfreq_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Frequentie"
+                                android:text="Freq Gem"
                                 android:textAlignment="textStart"
                                 android:textColor="#000000"
                                 android:textSize="20dp" />
@@ -591,12 +591,12 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/stepfreq_title"
+                                android:layout_below="@id/avgstepfreq_title"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:id="@+id/TestStepfreq_value"
+                                    android:id="@+id/TestAvgstepfreq_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="000"
@@ -608,9 +608,9 @@
                                     android:id="@+id/stepfreq_unit"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignBaseline="@+id/TestStepfreq_value"
+                                    android:layout_alignBaseline="@+id/TestAvgstepfreq_value"
                                     android:layout_marginLeft="2dp"
-                                    android:layout_toRightOf="@+id/TestStepfreq_value"
+                                    android:layout_toRightOf="@+id/TestAvgstepfreq_value"
                                     android:text="ms"
                                     android:textColor="#777777"
                                     android:textSize="20dp"
@@ -736,43 +736,12 @@
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/avgstepfreq_title"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Freq Gem"
-                                android:textAlignment="textStart"
-                                android:textColor="#000000"
-                                android:textSize="20dp" />
-
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/avgstepfreq_title"
                                 android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/TestAvgstepfreq_value"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="000"
-                                    android:textColor="#000000"
-                                    android:textSize="32dp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/avgstepfreq_unit"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignBaseline="@+id/TestAvgstepfreq_value"
-                                    android:layout_marginLeft="2dp"
-                                    android:layout_toRightOf="@+id/TestAvgstepfreq_value"
-                                    android:text="ms"
-                                    android:textColor="#777777"
-                                    android:textSize="20dp"
-                                    android:textStyle="bold" />
-                            </RelativeLayout>
+                                android:orientation="horizontal"/>
                         </RelativeLayout>
 
                     </LinearLayout>

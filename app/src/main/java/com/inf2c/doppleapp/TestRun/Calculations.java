@@ -1,5 +1,7 @@
 package com.inf2c.doppleapp.TestRun;
 
+import android.util.Log;
+
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +49,7 @@ public class Calculations {
         return Double.toString(roundedSpeed);
     }
 
-    public static String getStepFreqs(List<Trackpoint> list)
+    public static StepFreqs getStepFreqs(List<Trackpoint> list)
     {
         int minStepFreq = 0;
         int maxStepFreq = 0;
@@ -70,7 +72,7 @@ public class Calculations {
                 avgStepFreq = totalStepFreq / list.size();
             }
         }
-        return "Min step frequency: " + minStepFreq + "\nMax step frequency: " + maxStepFreq  + "\nAverage step frequency: " + avgStepFreq;
+        return new StepFreqs(minStepFreq, maxStepFreq, avgStepFreq);
     }
 
     public static Time getTimeRan(List<Trackpoint> list)
@@ -83,8 +85,71 @@ public class Calculations {
         return timeInSeconds - contactTime / steps;
     }
 
-    public static double getDutyFactor(int contactTime, double flightTime)
+    public static double getDutyFactor(int contactTime, int flightTime)
     {
-        return contactTime / (2 * (contactTime + flightTime));
+
+        System.out.println(contactTime);
+        System.out.println(flightTime);
+        double value = (float)contactTime / (2.0 * ((float)contactTime + (float)flightTime));
+        return Math.round(value * 100.0) / 100.0;
+    }
+
+    public static int getTotalStepCount(List<Trackpoint> list)
+    {
+        int totalStepcount = 0;
+        for(int i = 0; i < list.size(); i++)
+        {
+            totalStepcount += list.get(i).getSteps();
+        }
+        return totalStepcount;
+    }
+
+    public static int getAverageHeartRateBpm(List<Trackpoint> list)
+    {
+        int totalHeartRateBpm = 0;
+        for(int i = 0; i < list.size(); i++)
+        {
+            totalHeartRateBpm += list.get(i).getHeartRateBpm();
+        }
+        return totalHeartRateBpm / list.size();
+    }
+
+    public static int getAverageContactTime(List<Trackpoint> list)
+    {
+        int totalContactTime = 0;
+        for(int i = 0; i < list.size(); i++)
+        {
+            totalContactTime += list.get(i).getContactTime();
+        }
+        return totalContactTime / list.size();
+    }
+
+    public static long getAverageFlightTime(List<Trackpoint> list)
+    {
+        long time = 0;
+        long totalContactTime = 0;
+        int count = 0;
+        for(int i = 0; i < list.size(); i++)
+        {
+            if(time != list.get(i).getContactTime())
+            {
+                totalContactTime += list.get(i).getContactTime();
+                time = list.get(i).getContactTime();
+            }
+            if(i + 1 == list.size())
+            {
+                count = i;
+            }
+        }
+        return (totalContactTime - getTimeRan(list).getTime()) / count;
+        //TODO Zou andersom moeten | getTimeRan(list).getTime() - totalContactTime
+    }
+
+    public static double getAverageDutyFactor(List<Trackpoint> list)
+    {
+        int contactTime = getAverageContactTime(list);
+        long flightTime = getAverageFlightTime(list);
+
+        return getDutyFactor(contactTime, Long.valueOf(flightTime).intValue());
     }
 }
