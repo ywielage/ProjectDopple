@@ -9,13 +9,13 @@ public class Calculations {
     public Calculations() {
     }
 
-    public double deg2rad(double degrees)
+    public static double deg2rad(double degrees)
     {
         double pi = Math.PI;
         return degrees * (pi/180);
     }
 
-    public double getDistanceFromLatLonInKm(double lat1,double lon1,double lat2,double lon2) {
+    public static double getDistanceFromLatLonInKm(double lat1,double lon1,double lat2,double lon2) {
         double R = 6371; // Radius of the earth in km
         double dLat = deg2rad(lat2-lat1);  // deg2rad below
         double dLon = deg2rad(lon2-lon1);
@@ -24,7 +24,7 @@ public class Calculations {
         return R * c; // Distance in km
     }
 
-    public double getTotalDistance(List<Trackpoint> list)
+    public static double getTotalDistance(List<Trackpoint> list)
     {
         double totalDistance = 0.0;
         for(int i = 0; i+1 < list.size(); i++)
@@ -37,7 +37,7 @@ public class Calculations {
         return totalDistance;
     }
 
-    public String getSpeed(Time time, double km)
+    public static String getSpeed(Time time, double km)
     {
         double totalTimeInSec = (time.getHours() * 3600) + (time.getMinutes() * 60) + time.getSeconds();
         double meter = km * 1000;
@@ -47,7 +47,7 @@ public class Calculations {
         return Double.toString(roundedSpeed);
     }
 
-    public String getStepFreqs(List<Trackpoint> list)
+    public static String getStepFreqs(List<Trackpoint> list)
     {
         int minStepFreq = 0;
         int maxStepFreq = 0;

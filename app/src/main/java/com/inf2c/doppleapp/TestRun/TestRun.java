@@ -56,6 +56,7 @@ public class TestRun extends AppCompatActivity {
             public void onClick(View view) {
                 startRecordingSession();
 //                durationTv.setText(getSessionDataCSV(3, 0));
+
             }
         });
     }
