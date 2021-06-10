@@ -698,7 +698,7 @@
                     android:paddingRight="30dp">
 
                     <TextView
-                        android:id="@+id/accelerometerTitle"
+                        android:id="@+id/GraphTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
@@ -713,7 +713,7 @@
                         android:id="@+id/rawDataWrapper"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/accelerometerTitle"
+                        android:layout_below="@id/GraphTitle"
                         android:baselineAligned="false"
                         android:orientation="vertical">
 

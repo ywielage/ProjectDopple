@@ -81,6 +81,53 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:minWidth="200dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <com.jjoe64.graphview.GraphView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/graphData">
+
+                    </com.jjoe64.graphview.GraphView>
+
+                    <TextView
+                        android:id="@+id/GraphTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="#ffffff"
+                        android:text="Graph"
+                        android:textAlignment="textStart"
+                        android:textColor="#333333"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                    
+
+                    <LinearLayout
+                        android:id="@+id/rawDataWrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/GraphTitle"
+                        android:baselineAligned="false"
+                        android:orientation="vertical">
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingLeft="30dp"
@@ -753,7 +800,7 @@
                     android:paddingRight="30dp">
 
                     <TextView
-                        android:id="@+id/accelerometerTitle"
+                        android:id="@+id/GraphTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
@@ -768,7 +815,7 @@
                         android:id="@+id/rawDataWrapper"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/accelerometerTitle"
+                        android:layout_below="@id/GraphTitle"
                         android:baselineAligned="false"
                         android:orientation="vertical">
 
