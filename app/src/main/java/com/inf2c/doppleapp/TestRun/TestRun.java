@@ -15,9 +15,6 @@ import com.inf2c.doppleapp.R;
 
 
 import com.inf2c.doppleapp.ble.BLEConnectionService;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 import com.opencsv.CSVReader;
 
 import java.io.IOException;
@@ -46,9 +43,6 @@ public class TestRun extends AppCompatActivity {
     private TextView stepMaxFreqValue;
     private TextView stepAvgFreqValue;
 
-    private GraphView graphData;
-    private LineGraphSeries<DataPoint> series;
-
 
     @SuppressLint("ResourceType")
     @Override
@@ -76,17 +70,6 @@ public class TestRun extends AppCompatActivity {
         stepMinFreqValue = (TextView) findViewById(R.id.Testminstepfreq_value);
         stepMaxFreqValue = (TextView) findViewById(R.id.TestMaxstepfreq_value);
         stepAvgFreqValue = (TextView) findViewById(R.id.TestAvgstepfreq_value);
-
-        graphData = (GraphView) findViewById(R.id.graphData);
-        series = new LineGraphSeries<DataPoint>();
-
-        int x = 0, y;
-        for(int i = 0; i<list.size();i++) {
-            x++;
-            y = list.get(i).getStepFrequency();
-            series.appendData(new DataPoint(x, y), true, list.size());
-        }
-        graphData.addSeries(series);
 
         //Set field values
         Time timeRan = Calculations.getTimeRan(list);
