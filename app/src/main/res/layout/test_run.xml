@@ -76,9 +76,7 @@
                 android:id="@+id/innerLay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:orientation="horizontal">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -221,7 +219,7 @@
                     </ScrollView>
 
                 </LinearLayout>
-            <LinearLayout
+                <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:minWidth="200dp"
@@ -547,7 +545,6 @@
                     </RelativeLayout>
                 </LinearLayout>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -794,7 +791,6 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -922,6 +918,25 @@
                             </RelativeLayout>
                         </RelativeLayout>
                     </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.jjoe64.graphview.GraphView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/graph"
+                            android:/>
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
         </com.inf2c.doppleapp.carousel.Carousel>
