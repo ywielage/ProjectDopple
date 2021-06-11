@@ -16,6 +16,7 @@ import com.inf2c.doppleapp.R;
 
 import com.inf2c.doppleapp.ble.BLEConnectionService;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.opencsv.CSVReader;
@@ -79,15 +80,20 @@ public class TestRun extends AppCompatActivity {
 
         graphData = (GraphView) findViewById(R.id.graphData);
         series = new LineGraphSeries<DataPoint>();
+        GridLabelRenderer gridLabelRenderer = graphData.getGridLabelRenderer();
+        gridLabelRenderer.setHorizontalAxisTitle("Amount of lines");
+        gridLabelRenderer.setVerticalAxisTitle(Long.toString(list.get(9).getTime()));
 
-        int x = 0, y;
+        long x;
+        int y;
         for(int i = 0; i<list.size();i++) {
-            x++;
+            x = list.get(i).getTime();
             y = list.get(i).getStepFrequency();
             series.appendData(new DataPoint(x, y), true, list.size());
         }
         graphData.addSeries(series);
 
+        list.get(9).getTime();
         //Set field values
         Time timeRan = Calculations.getTimeRan(list);
         double totalDistance = Math.round(Calculations.getTotalDistance(list) * 100.0) / 100.0;
