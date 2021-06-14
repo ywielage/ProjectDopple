@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TestRun extends AppCompatActivity {
@@ -81,13 +82,17 @@ public class TestRun extends AppCompatActivity {
         graphData = (GraphView) findViewById(R.id.graphData);
         series = new LineGraphSeries<DataPoint>();
         GridLabelRenderer gridLabelRenderer = graphData.getGridLabelRenderer();
-        gridLabelRenderer.setHorizontalAxisTitle("Amount of lines");
-        gridLabelRenderer.setVerticalAxisTitle(Long.toString(list.get(9).getTime()));
+        gridLabelRenderer.setHorizontalAxisTitle("Minutes");
+        gridLabelRenderer.setVerticalAxisTitle(new Date(list.get(0).getTime()).toString().split(" ")[3]);
 
         long x;
         int y;
         for(int i = 0; i<list.size();i++) {
-            x = list.get(i).getTime();
+            String[] dateSplit = new Date(list.get(i).getTime()).toString().split(" ");
+            String[] timeSplit = dateSplit[3].split(":");
+            String timehours = timeSplit[0], timeMinutes = timeSplit[1], timeSeconds = timeSplit[2];
+            System.out.println(timeMinutes);
+            x = Long.parseLong(timehours);
             y = list.get(i).getStepFrequency();
             series.appendData(new DataPoint(x, y), true, list.size());
         }
