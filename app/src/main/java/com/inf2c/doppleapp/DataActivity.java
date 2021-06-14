@@ -15,7 +15,6 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.inf2c.doppleapp.TestRun.TestRun;
 import com.inf2c.doppleapp.ble.BLEConnectionService;
 import com.inf2c.doppleapp.carousel.Carousel;
 import com.inf2c.doppleapp.heart_rate.BLEHeartRateService;
@@ -34,7 +34,6 @@ import com.inf2c.doppleapp.logging.DoppleLog;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -253,6 +252,13 @@ public class DataActivity extends AppCompatActivity {
             sessionScreen.putExtra("EXTRA_DOPPLE_DEVICE_NAME", BLEDeviceName);
             sessionScreen.putExtra("EXTRA_DOPPLE_DEVICE_ADDRESS", BLEAddress);
             startActivity(sessionScreen);
+        });
+
+        findViewById(R.id.viewTrainingButton).setOnClickListener(view -> {
+            Intent testRunScreen = new Intent(getApplicationContext(), TestRun.class);
+            testRunScreen.putExtra("EXTRA_DOPPLE_DEVICE_NAME", BLEDeviceName);
+            testRunScreen.putExtra("EXTRA_DOPPLE_DEVICE_ADDRESS", BLEAddress);
+            startActivity(testRunScreen);
         });
 
         setHeartRate("0");
