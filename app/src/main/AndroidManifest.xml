@@ -69,12 +69,12 @@
             android:name=".SplashScreenActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
-           <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-                <action android:name="android.net.wifi.STATE_CHANGE"/>
-           </intent-filter>
+<!--           <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>-->
+<!--                <action android:name="android.net.wifi.STATE_CHANGE"/>-->
+<!--           </intent-filter>-->
         </activity>
         <activity
             android:name=".MainActivity" />
@@ -82,12 +82,12 @@
         <activity android:name=".TestRun.TestRun"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
-        <!--<intent-filter>
+        <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
             <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             <action android:name="android.net.wifi.STATE_CHANGE"/>
-        </intent-filter>-->
+        </intent-filter>
         </activity>
 
         <provider

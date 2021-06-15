@@ -1,6 +1,6 @@
 package com.inf2c.doppleapp.TestRun;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,7 +22,6 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.inf2c.doppleapp.R;
@@ -82,6 +83,11 @@ public class TestRun extends AppCompatActivity {
     private TextView stepAvgFreqValue;
     private Fragment heartBeatFragment;
 
+    private List<Trackpoint> list;
+
+    private Button submitGraphLimitsBtn;
+    private EditText graphStartLimitEt;
+    private EditText graphEndLimitEt;
 
     private GraphView graphData;
     private LineGraphSeries<DataPoint> series;
@@ -89,15 +95,58 @@ public class TestRun extends AppCompatActivity {
     private String lastLapTime = "00:00:00";
 
 
-    /*@SuppressLint("ResourceType")
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_run);
 
+//        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
+//        if(!isBLEServiceRunning(BLEConnectionService.class)){
+//            setContentView(R.layout.loading_screen);
+//
+//            //set name and address
+//            Intent invokedIntent = getIntent();
+//            BLEDeviceName = invokedIntent.getStringExtra("EXTRA_DOPPLE_DEVICE_NAME");
+//            BLEAddress = invokedIntent.getStringExtra("EXTRA_DOPPLE_DEVICE_ADDRESS");
+//            if(BLEDeviceName.equals("Sample Earbuds") || BLEAddress.equals("12:34:56:78")){
+//                //if sample device -> run this :)
+//                setContentView(R.layout.test_run);
+//                setupCarousel();
+//                assignListeners();
+//                setupView();
+//
+//                Intent gattServiceIntent = new Intent(this, BLEConnectionService.class);
+//                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_NAME", BLEDeviceName);
+//                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_ADDRESS", BLEAddress);
+//                startService(gattServiceIntent);
+//                setupServiceEventReceiver();
+//            }
+//            else{
+//                //enable the gatt service
+//                Intent gattServiceIntent = new Intent(this, BLEConnectionService.class);
+//                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_NAME", BLEDeviceName);
+//                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_ADDRESS", BLEAddress);
+//                startService(gattServiceIntent);
+//                setupServiceEventReceiver();
+//            }
+//        }
+//        else {
+//            setContentView(R.layout.test_run);
+//            setupServiceEventReceiver();
+//            assignListeners();
+//            setupView();
+//
+//            //because of the running service, request some parameters from the service.
+//            sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_REQUEST_DEVICE_VALUES));
+//        }
+//
+//        //request status
+//        sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_REQUEST_RECORDING));
+
         InputStream object = this.getResources().openRawResource(R.raw.dopple_session_20210511164705_1);
         TestXMLParser parser = new TestXMLParser();
-        List<Trackpoint> list = parser.parse(object);
+        this.list = parser.parse(object);
 
         //Get field ids
         durationTv = (TextView) findViewById(R.id.durationTv);
@@ -108,7 +157,6 @@ public class TestRun extends AppCompatActivity {
 
         distanceValueTV = (TextView) findViewById(R.id.distance_value);
         speedValueTV = (TextView) findViewById(R.id.speed_value);
-        heartbeatValue = (TextView) findViewById(R.id.heartBeatValue);
         contactTimeValue = (TextView) findViewById(R.id.contactTimeValue);
         flightTimeValue = (TextView) findViewById(R.id.flightTime_value);
         dutyFactorValue = (TextView) findViewById(R.id.dutyFactor_value);
@@ -118,43 +166,40 @@ public class TestRun extends AppCompatActivity {
         stepMaxFreqValue = (TextView) findViewById(R.id.TestMaxstepfreq_value);
         stepAvgFreqValue = (TextView) findViewById(R.id.TestAvgstepfreq_value);
 
-        graphData = (GraphView) findViewById(R.id.graphData);
-        series = new LineGraphSeries<DataPoint>();
-        GridLabelRenderer gridLabelRenderer = graphData.getGridLabelRenderer();
-        gridLabelRenderer.setHorizontalAxisTitle("Minutes");
-        gridLabelRenderer.setVerticalAxisTitle(new Date(list.get(0).getTime()).toString().split(" ")[3]);
+        createGraph(0,100);
 
-        long x;
-        int y;
-        for(int i = 0; i<list.size();i++) {
-            String[] dateSplit = new Date(list.get(i).getTime()).toString().split(" ");
-            String[] timeSplit = dateSplit[3].split(":");
-            String timehours = timeSplit[0], timeMinutes = timeSplit[1], timeSeconds = timeSplit[2];
-            System.out.println(timeMinutes);
-            x = Long.parseLong(timehours);
-            y = list.get(i).getStepFrequency();
-            series.appendData(new DataPoint(x, y), true, list.size());
-        }
-        graphData.addSeries(series);
+        submitGraphLimitsBtn = (Button) findViewById(R.id.submitGraphLimitsBtn);
 
-        list.get(9).getTime();
+        submitGraphLimitsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
+                graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
+
+                graphStartLimitEt.getText();
+
+                createGraph(Integer.parseInt(String.valueOf(graphStartLimitEt.getText())), Integer.parseInt(String.valueOf(graphEndLimitEt.getText())));
+            }
+        });
+
+
         //Set field values
         Time timeRan = Calculations.getTimeRan(list);
         double totalDistance = Math.round(Calculations.getTotalDistance(list) * 100.0) / 100.0;
         StepFreqs stepsFreq = Calculations.getStepFreqs(list);
 
-        durationTv.setText(timeRan.toString());
-        distanceValueTV.setText(Double.toString(totalDistance));
-        speedValueTV.setText(Calculations.getSpeed(timeRan, totalDistance));
-        heartbeatValue.setText(Integer.toString(Calculations.getAverageHeartRateBpm(list)));
-        contactTimeValue.setText(Integer.toString(Calculations.getAverageContactTime(list)));
-        flightTimeValue.setText(Long.toString(Calculations.getAverageFlightTime(list)));
-        dutyFactorValue.setText(Double.toString(Calculations.getAverageDutyFactor(list)));
-
-        stepCountValue.setText(Integer.toString(Calculations.getTotalStepCount(list)));
-        stepMinFreqValue.setText(Integer.toString(stepsFreq.getMinStepFreq()));
-        stepMaxFreqValue.setText(Integer.toString(stepsFreq.getMaxStepFreq()));
-        stepAvgFreqValue.setText(Integer.toString(stepsFreq.getAvgStepFreq()));
+//        durationTv.setText(timeRan.toString());
+//        distanceValueTV.setText(Double.toString(totalDistance));
+//        speedValueTV.setText(Calculations.getSpeed(timeRan, totalDistance));
+//        heartbeatValue.setText(Integer.toString(Calculations.getAverageHeartRateBpm(list)));
+//        contactTimeValue.setText(Integer.toString(Calculations.getAverageContactTime(list)));
+//        flightTimeValue.setText(Long.toString(Calculations.getAverageFlightTime(list)));
+//        dutyFactorValue.setText(Double.toString(Calculations.getAverageDutyFactor(list)));
+//
+//        stepCountValue.setText(Integer.toString(Calculations.getTotalStepCount(list)));
+//        stepMinFreqValue.setText(Integer.toString(stepsFreq.getMinStepFreq()));
+//        stepMaxFreqValue.setText(Integer.toString(stepsFreq.getMaxStepFreq()));
+//        stepAvgFreqValue.setText(Integer.toString(stepsFreq.getAvgStepFreq()));
 
         testSessionBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -167,7 +212,36 @@ public class TestRun extends AppCompatActivity {
             }
         });
     }
-     */
+
+    private void createGraph(int startSecond, int endSecond){
+        graphData = (GraphView) findViewById(R.id.graphData);
+        series = new LineGraphSeries<DataPoint>();
+        GridLabelRenderer gridLabelRenderer = graphData.getGridLabelRenderer();
+        gridLabelRenderer.setHorizontalAxisTitle("Time");
+        gridLabelRenderer.setVerticalAxisTitle("Step frequency");
+
+
+        long x = 0;
+        int y;
+        for(int i = 0; i<this.list.size();i++) {
+            String[] dateSplit = new Date(this.list.get(i).getTime()).toString().split(" ");
+            String[] timeSplit = dateSplit[3].split(":");
+
+            String timehours = timeSplit[0], timeMinutes = timeSplit[1], timeSeconds = timeSplit[2];
+
+//            x = Long.parseLong(timeMinutes);
+            x++;
+
+            y = this.list.get(i).getStepFrequency();
+            series.appendData(new DataPoint(x, y), true, list.size());
+        }
+        graphData.getViewport().setMinX(startSecond);
+        graphData.getViewport().setMaxX(endSecond);
+        graphData.getViewport().setXAxisBoundsManual(true);
+
+        graphData.addSeries(series);
+    }
+
 
     private boolean isBLEServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -177,55 +251,6 @@ public class TestRun extends AppCompatActivity {
             }
         }
         return false;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_run);
-
-        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
-        if(!isBLEServiceRunning(BLEConnectionService.class)){
-            setContentView(R.layout.loading_screen);
-
-            //set name and address
-            Intent invokedIntent = getIntent();
-            BLEDeviceName = invokedIntent.getStringExtra("EXTRA_DOPPLE_DEVICE_NAME");
-            BLEAddress = invokedIntent.getStringExtra("EXTRA_DOPPLE_DEVICE_ADDRESS");
-            if(BLEDeviceName.equals("Sample Earbuds") || BLEAddress.equals("12:34:56:78")){
-                //if sample device -> run this :)
-                setContentView(R.layout.test_run);
-                setupCarousel();
-                assignListeners();
-                setupView();
-
-                Intent gattServiceIntent = new Intent(this, BLEConnectionService.class);
-                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_NAME", BLEDeviceName);
-                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_ADDRESS", BLEAddress);
-                startService(gattServiceIntent);
-                setupServiceEventReceiver();
-            }
-            else{
-                //enable the gatt service
-                Intent gattServiceIntent = new Intent(this, BLEConnectionService.class);
-                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_NAME", BLEDeviceName);
-                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_ADDRESS", BLEAddress);
-                startService(gattServiceIntent);
-                setupServiceEventReceiver();
-            }
-        }
-        else {
-            setContentView(R.layout.test_run);
-            setupServiceEventReceiver();
-            assignListeners();
-            setupView();
-
-            //because of the running service, request some parameters from the service.
-            sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_REQUEST_DEVICE_VALUES));
-        }
-
-        //request status
-        sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_REQUEST_RECORDING));
     }
 
     @Override

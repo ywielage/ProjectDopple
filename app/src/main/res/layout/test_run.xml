@@ -87,25 +87,12 @@
                     android:paddingRight="30dp">
 
                     <com.jjoe64.graphview.GraphView
+                        android:id="@+id/graphData"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/graphData">
+                        android:layout_height="314dp">
 
                     </com.jjoe64.graphview.GraphView>
 
-                    <TextView
-                        android:id="@+id/graphTv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:background="#ffffff"
-                        android:text="Graph"
-                        android:textAlignment="textStart"
-                        android:textColor="#333333"
-                        android:textSize="30dp"
-                        android:textStyle="bold" />
-
-                    
 
                     <LinearLayout
                         android:id="@+id/rawDataWrapper"
@@ -116,13 +103,36 @@
                         android:orientation="vertical">
 
 
+                        <EditText
+                            android:id="@+id/graphStartLimitEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:hint="Start" />
+
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="vertical"/>
 
+                        <EditText
+                            android:id="@+id/graphEndLimitEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:hint="End" />
+
                     </LinearLayout>
+
+                    <Button
+                        android:id="@+id/submitGraphLimitsBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Button" />
+
                 </LinearLayout>
 
                 <LinearLayout
