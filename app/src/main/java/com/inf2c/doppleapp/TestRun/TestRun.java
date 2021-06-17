@@ -44,7 +44,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Time;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -95,6 +99,7 @@ public class TestRun extends AppCompatActivity {
     private String lastLapTime = "00:00:00";
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,11 +171,16 @@ public class TestRun extends AppCompatActivity {
         stepMaxFreqValue = (TextView) findViewById(R.id.TestMaxstepfreq_value);
         stepAvgFreqValue = (TextView) findViewById(R.id.TestAvgstepfreq_value);
 
-        createGraph(0,100);
+        try {
+            createGraph(0,100);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         submitGraphLimitsBtn = (Button) findViewById(R.id.submitGraphLimitsBtn);
 
         submitGraphLimitsBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
@@ -178,7 +188,11 @@ public class TestRun extends AppCompatActivity {
 
                 graphStartLimitEt.getText();
 
-                createGraph(Integer.parseInt(String.valueOf(graphStartLimitEt.getText())), Integer.parseInt(String.valueOf(graphEndLimitEt.getText())));
+                try {
+                    createGraph(Integer.parseInt(String.valueOf(graphStartLimitEt.getText())), Integer.parseInt(String.valueOf(graphEndLimitEt.getText())));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -213,7 +227,8 @@ public class TestRun extends AppCompatActivity {
         });
     }
 
-    private void createGraph(int startSecond, int endSecond){
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createGraph(int startSecond, int endSecond) throws ParseException {
         graphData = (GraphView) findViewById(R.id.graphData);
         series = new LineGraphSeries<DataPoint>();
         GridLabelRenderer gridLabelRenderer = graphData.getGridLabelRenderer();
@@ -221,16 +236,27 @@ public class TestRun extends AppCompatActivity {
         gridLabelRenderer.setVerticalAxisTitle("Step frequency");
 
 
-        long x = 0;
+        long x;
         int y;
+        Date startTime = null;
         for(int i = 0; i<this.list.size();i++) {
             String[] dateSplit = new Date(this.list.get(i).getTime()).toString().split(" ");
             String[] timeSplit = dateSplit[3].split(":");
 
-            String timehours = timeSplit[0], timeMinutes = timeSplit[1], timeSeconds = timeSplit[2];
+            String time = timeSplit[0] + "-" + timeSplit[1] + "-" + timeSplit[2];
+            Date currTime = new SimpleDateFormat("hh-mm-ss").parse(time);
 
-//            x = Long.parseLong(timeMinutes);
-            x++;
+
+            if(i == 0) {
+                startTime = new SimpleDateFormat("hh-mm-ss").parse(time);
+                x = 0;
+            }
+            else {
+                long diff = currTime.getTime() - startTime.getTime();
+                x = diff / 1000;
+            }
+
+//            String timehours = timeSplit[0], timeMinutes = timeSplit[1], timeSeconds = timeSplit[2];
 
             y = this.list.get(i).getStepFrequency();
             series.appendData(new DataPoint(x, y), true, list.size());
