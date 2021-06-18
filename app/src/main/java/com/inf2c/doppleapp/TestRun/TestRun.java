@@ -12,11 +12,13 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,6 +88,8 @@ public class TestRun extends AppCompatActivity {
     private TextView stepMaxFreqValue;
     private TextView stepAvgFreqValue;
     private Fragment heartBeatFragment;
+
+    private Spinner selectDataSpinner;
 
     private List<Trackpoint> list;
 
@@ -171,8 +175,14 @@ public class TestRun extends AppCompatActivity {
         stepMaxFreqValue = (TextView) findViewById(R.id.TestMaxstepfreq_value);
         stepAvgFreqValue = (TextView) findViewById(R.id.TestAvgstepfreq_value);
 
+        selectDataSpinner = findViewById(R.id.selectDataSpinner);
+
+        String[] items = new String[]{"Step frequency", "Contact time", "Flight time", "Duty factor"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
+        selectDataSpinner.setAdapter(adapter);
+
         try {
-            createGraph(0,100);
+            createGraph(0,300, "Step frequency");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -186,12 +196,13 @@ public class TestRun extends AppCompatActivity {
                 graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
                 graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
 
-                graphStartLimitEt.getText();
 
-                try {
-                    createGraph(Integer.parseInt(String.valueOf(graphStartLimitEt.getText())), Integer.parseInt(String.valueOf(graphEndLimitEt.getText())));
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                if(graphStartLimitEt.getText().length() > 0 || graphEndLimitEt.getText().length() > 0 ) {
+                    try {
+                        createGraph(Integer.parseInt(String.valueOf(graphStartLimitEt.getText())), Integer.parseInt(String.valueOf(graphEndLimitEt.getText())), selectDataSpinner.getSelectedItem().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -228,16 +239,21 @@ public class TestRun extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void createGraph(int startSecond, int endSecond) throws ParseException {
+    private void createGraph(int startSecond, int endSecond, String data) throws ParseException {
+
         graphData = (GraphView) findViewById(R.id.graphData);
         series = new LineGraphSeries<DataPoint>();
         GridLabelRenderer gridLabelRenderer = graphData.getGridLabelRenderer();
         gridLabelRenderer.setHorizontalAxisTitle("Time");
-        gridLabelRenderer.setVerticalAxisTitle("Step frequency");
+        gridLabelRenderer.setVerticalAxisTitle(data);
+
+        if(graphData.getSeries().size() > 0) {
+            graphData.removeAllSeries();
+        }
 
 
         long x;
-        int y;
+        double y = 0.0;
         Date startTime = null;
         for(int i = 0; i<this.list.size();i++) {
             String[] dateSplit = new Date(this.list.get(i).getTime()).toString().split(" ");
@@ -253,12 +269,25 @@ public class TestRun extends AppCompatActivity {
             }
             else {
                 long diff = currTime.getTime() - startTime.getTime();
-                x = diff / 1000;
+                x = diff / 1000; // TODO %60
             }
 
-//            String timehours = timeSplit[0], timeMinutes = timeSplit[1], timeSeconds = timeSplit[2];
+            switch (data) {
+                case "Step frequency":
+                    y = this.list.get(i).getStepFrequency();
+                    break;
+                case "Contact time":
+                    y = this.list.get(i).getContactTime();
+                    break;
+                case "Flight time":
+                    y = Calculations.getFlightTime(Math.toIntExact(x),this.list.get(i).getContactTime(), this.list.get(i).getSteps()); // TODO
+                    break;
+                case "Duty factor":
+                    int flighttime = Calculations.getFlightTime(Math.toIntExact(x),this.list.get(i).getContactTime(), this.list.get(i).getSteps());
+                    y = Calculations.getDutyFactor((this.list.get(i).getContactTime()), flighttime);
+                    break;
+            }
 
-            y = this.list.get(i).getStepFrequency();
             series.appendData(new DataPoint(x, y), true, list.size());
         }
         graphData.getViewport().setMinX(startSecond);

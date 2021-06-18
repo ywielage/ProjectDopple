@@ -89,7 +89,7 @@
                     <com.jjoe64.graphview.GraphView
                         android:id="@+id/graphData"
                         android:layout_width="match_parent"
-                        android:layout_height="314dp">
+                        android:layout_height="253dp">
 
                     </com.jjoe64.graphview.GraphView>
 
@@ -108,8 +108,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:hint="Start" />
+                            android:hint="Start"
+                            android:inputType="textPersonName" />
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
@@ -124,6 +124,13 @@
                             android:ems="10"
                             android:inputType="textPersonName"
                             android:hint="End" />
+
+                        <Spinner
+                            android:id="@+id/selectDataSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:drawable/btn_dropdown"
+                            android:spinnerMode="dropdown"/>
 
                     </LinearLayout>
 
