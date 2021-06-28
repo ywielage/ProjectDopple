@@ -88,8 +88,8 @@
 
                     <com.jjoe64.graphview.GraphView
                         android:id="@+id/graphData"
-                        android:layout_width="match_parent"
-                        android:layout_height="253dp">
+                        android:layout_width="326dp"
+                        android:layout_height="204dp">
 
                     </com.jjoe64.graphview.GraphView>
 
@@ -124,6 +124,14 @@
                             android:ems="10"
                             android:inputType="textPersonName"
                             android:hint="End" />
+
+                        <EditText
+                            android:id="@+id/graphInvervalET"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint=" Target Average"
+                            android:inputType="textPersonName" />
 
                         <Spinner
                             android:id="@+id/selectDataSpinner"

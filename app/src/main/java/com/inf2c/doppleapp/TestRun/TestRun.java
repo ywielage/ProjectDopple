@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -96,9 +97,12 @@ public class TestRun extends AppCompatActivity {
     private Button submitGraphLimitsBtn;
     private EditText graphStartLimitEt;
     private EditText graphEndLimitEt;
+    private EditText graphTargetET;
 
     private GraphView graphData;
     private LineGraphSeries<DataPoint> series;
+    private LineGraphSeries<DataPoint> targetSeries;
+    private boolean initialGraph;
 
     private String lastLapTime = "00:00:00";
 
@@ -153,6 +157,7 @@ public class TestRun extends AppCompatActivity {
 //        //request status
 //        sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_REQUEST_RECORDING));
 
+
         InputStream object = this.getResources().openRawResource(R.raw.dopple_session_20210511164705_1);
         TestXMLParser parser = new TestXMLParser();
         this.list = parser.parse(object);
@@ -180,12 +185,13 @@ public class TestRun extends AppCompatActivity {
         String[] items = new String[]{"Step frequency", "Contact time", "Flight time", "Duty factor"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
         selectDataSpinner.setAdapter(adapter);
-
+        initialGraph = true;
         try {
             createGraph(0,300, "Step frequency");
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
 
         submitGraphLimitsBtn = (Button) findViewById(R.id.submitGraphLimitsBtn);
 
@@ -193,8 +199,11 @@ public class TestRun extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
+                initialGraph = false;
                 graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
                 graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
+                graphTargetET = (EditText) findViewById(R.id.graphInvervalET);
+                float targetFloat = Float.parseFloat(String.valueOf(graphTargetET.getText()));
 
 
                 if(graphStartLimitEt.getText().length() > 0 || graphEndLimitEt.getText().length() > 0 ) {
@@ -243,6 +252,7 @@ public class TestRun extends AppCompatActivity {
 
         graphData = (GraphView) findViewById(R.id.graphData);
         series = new LineGraphSeries<DataPoint>();
+        targetSeries = new LineGraphSeries<DataPoint>();
         GridLabelRenderer gridLabelRenderer = graphData.getGridLabelRenderer();
         gridLabelRenderer.setHorizontalAxisTitle("Time");
         gridLabelRenderer.setVerticalAxisTitle(data);
@@ -289,11 +299,20 @@ public class TestRun extends AppCompatActivity {
             }
 
             series.appendData(new DataPoint(x, y), true, list.size());
+            if(!initialGraph){
+                long graphTarget = Long.parseLong(String.valueOf(graphTargetET.getText()));
+                targetSeries.appendData(new DataPoint(x, graphTarget), true ,list.size());
+            }
         }
+
+
         graphData.getViewport().setMinX(startSecond);
         graphData.getViewport().setMaxX(endSecond);
         graphData.getViewport().setXAxisBoundsManual(true);
-
+        if(!initialGraph){
+            targetSeries.setColor(Color.YELLOW);
+            graphData.addSeries(targetSeries);
+        }
         graphData.addSeries(series);
     }
 
