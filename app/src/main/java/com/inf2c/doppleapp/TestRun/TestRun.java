@@ -88,6 +88,8 @@ public class TestRun extends AppCompatActivity {
     private TextView stepAvgFreqValue;
     private Fragment heartBeatFragment;
 
+    private TextView feedbackValue;
+
     private Spinner selectDataSpinner;
 
     private List<Trackpoint> list;
@@ -178,6 +180,7 @@ public class TestRun extends AppCompatActivity {
         stepMinFreqValue = (TextView) findViewById(R.id.Testminstepfreq_value);
         stepMaxFreqValue = (TextView) findViewById(R.id.TestMaxstepfreq_value);
         stepAvgFreqValue = (TextView) findViewById(R.id.TestAvgstepfreq_value);
+        feedbackValue = (TextView) findViewById(R.id.feedback_value);
 
         selectDataSpinner = findViewById(R.id.selectDataSpinner);
 
@@ -186,7 +189,7 @@ public class TestRun extends AppCompatActivity {
         selectDataSpinner.setAdapter(adapter);
         initialGraph = true;
         try {
-            giveFeedback("Step frequency");
+            giveFeedback("Step frequency", 140, 160);
             createGraph(0,300, "Step frequency");
         } catch (ParseException e) {
             e.printStackTrace();
@@ -263,13 +266,11 @@ public class TestRun extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void giveFeedback(String data)
+    public void giveFeedback(String data, int goalMinimum, int goalMaximum)
     {
-        int goalMinimum = 130;
-        int goalMaximum = 160;
-
         float underMinimum = 0;
         float overMaximum = 0;
+        String nlData = "";
 
         double stat;
 
@@ -277,6 +278,7 @@ public class TestRun extends AppCompatActivity {
             switch (data) {
                 case "Contact time":
                     stat = this.list.get(i).getContactTime();
+                    nlData = "contacttijd";
                     break;
 //                case "Flight time":
 //                    stat = Calculations.getFlightTime(Math.toIntExact(x), this.list.get(i).getContactTime(), this.list.get(i).getSteps()); // TODO
@@ -287,6 +289,7 @@ public class TestRun extends AppCompatActivity {
 //                    break;
                 default:
                     stat = this.list.get(i).getStepFrequency();
+                    nlData = "stapfrequentie";
                     break;
             }
             if(stat < goalMinimum)
@@ -302,8 +305,38 @@ public class TestRun extends AppCompatActivity {
         float underMinimumPercent = Math.round(underMinimum / list.size() * 10000f) / 100f;
         float overMaximumPercent = Math.round(overMaximum / list.size() * 10000f) / 100f;
 
-        System.out.println("You're under your minimum " + underMinimumPercent + "% of the time");
-        System.out.println("You're over your maximum " + overMaximumPercent + "% of the time");
+        feedbackValue.append(String.format("Onder minimum %s%% van de tijd", underMinimumPercent));
+        feedbackValue.append(String.format("\nBoven maximum %s%% van de tijd", overMaximumPercent));
+        if(underMinimumPercent > 15 && overMaximumPercent > 15)
+        {
+            feedbackValue.append("\nProbeer een meer regelmatige stapfrequentie te krijgen");
+        }
+        else if(underMinimum > overMaximum)
+        {
+            if(underMinimumPercent > 10 && underMinimumPercent <= 20)
+            {
+                feedbackValue.append(String.format("\nProbeer je %s te verhogen", nlData));
+            }
+            else if(underMinimumPercent > 20)
+            {
+                feedbackValue.append(String.format("\nProbeer je %s regelmatig te verhogen", nlData));
+            }
+        }
+        else if(underMinimum < overMaximum)
+        {
+            if(overMaximumPercent > 10 && overMaximumPercent <= 20)
+            {
+                feedbackValue.append(String.format("\nProbeer je %s te verlagen", nlData));
+            }
+            else if(overMaximumPercent > 20)
+            {
+                feedbackValue.append(String.format("\nProbeer je %s regelmatig te verlagen", nlData));
+            }
+        }
+        else
+        {
+            feedbackValue.append(String.format("\nJe zit op een juiste %s", nlData));
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
