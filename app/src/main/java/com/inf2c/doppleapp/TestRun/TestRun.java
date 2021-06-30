@@ -282,13 +282,6 @@ public class TestRun extends AppCompatActivity {
                     stat = this.list.get(i).getContactTime();
                     nlData = "contacttijd";
                     break;
-//                case "Flight time":
-//                    stat = Calculations.getFlightTime(Math.toIntExact(x), this.list.get(i).getContactTime(), this.list.get(i).getSteps()); // TODO
-//                    break;
-//                case "Duty factor":
-//                    int flighttime = Calculations.getFlightTime(Math.toIntExact(x),this.list.get(i).getContactTime(), this.list.get(i).getSteps());
-//                    stat = Calculations.getDutyFactor((this.list.get(i).getContactTime()), flighttime);
-//                    break;
                 default:
                     stat = this.list.get(i).getStepFrequency();
                     nlData = "stapfrequentie";
