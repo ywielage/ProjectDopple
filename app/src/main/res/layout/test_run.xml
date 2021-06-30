@@ -109,8 +109,7 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint="Start"
-                            android:inputType="number"
-                            />
+                            android:inputType="number" />
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
@@ -125,7 +124,7 @@
                             android:ems="10"
                             android:hint="End"
                             android:inputType="textPersonName" />
-                            android:inputType="number"
+                        android:inputType="number"
 
                         <EditText
                             android:id="@+id/graphInvervalET"
@@ -133,8 +132,7 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint=" Target Average"
-                            android:inputType="number"
-                            />
+                            android:inputType="number" />
 
                         <Spinner
                             android:id="@+id/selectDataSpinner"
@@ -142,108 +140,6 @@
                             android:layout_height="wrap_content"
                             android:background="@android:drawable/btn_dropdown"
                             android:spinnerMode="dropdown" />
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
-                            android:orientation="vertical"
-                            android:paddingLeft="30dp"
-                            android:paddingRight="30dp">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="12dp"
-                                android:background="#ffffff"
-                                android:text="Ronden"
-                                android:textAlignment="textStart"
-                                android:textColor="#333333"
-                                android:textSize="30dp"
-                                android:textStyle="bold" />
-
-                            <LinearLayout
-                                android:id="@+id/lapCurrent"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="10dp"
-                                android:orientation="horizontal"
-                                android:paddingTop="45dp"
-                                android:paddingBottom="45dp">
-
-                                <TextView
-                                    android:id="@+id/testLapTime"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="20dp"
-                                    android:text="0:39:20"
-                                    android:textAlignment="center"
-                                    android:textSize="26dp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/testLapActualTime"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="0.26,09"
-                                    android:textAlignment="center"
-                                    android:textSize="26dp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="2dp"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="100px"
-                                    android:layout_height="wrap_content"
-                                    android:padding="2dp"
-                                    android:text="#"
-                                    android:textSize="22dp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/durationTv"
-                                    android:layout_width="300px"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:padding="2dp"
-                                    android:text="Duur"
-                                    android:textAlignment="center"
-                                    android:textSize="22dp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="300px"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:padding="2dp"
-                                    android:text="Einde"
-                                    android:textAlignment="center"
-                                    android:textSize="22dp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                            <ScrollView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_horizontal">
-
-                                <LinearLayout
-                                    android:id="@+id/lapList"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-
-                                </LinearLayout>
-                            </ScrollView>
-
-                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -319,6 +215,109 @@
                         </RelativeLayout>
 
                     </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="#ffffff"
+                        android:text="Ronden"
+                        android:textAlignment="textStart"
+                        android:textColor="#333333"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/lapCurrent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="45dp"
+                        android:paddingBottom="45dp">
+
+                        <TextView
+                            android:id="@+id/testLapTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="0:39:20"
+                            android:textAlignment="center"
+                            android:textSize="26dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/testLapActualTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.26,09"
+                            android:textAlignment="center"
+                            android:textSize="26dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="2dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="100px"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="#"
+                            android:textSize="22dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/durationTv"
+                            android:layout_width="300px"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:padding="2dp"
+                            android:text="Duur"
+                            android:textAlignment="center"
+                            android:textSize="22dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="300px"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:padding="2dp"
+                            android:text="Einde"
+                            android:textAlignment="center"
+                            android:textSize="22dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <ScrollView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/lapList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        </LinearLayout>
+                    </ScrollView>
 
                 </LinearLayout>
 
@@ -986,25 +985,6 @@
                             </RelativeLayout>
                         </RelativeLayout>
                     </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <com.jjoe64.graphview.GraphView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/graph"
-                            />
-                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
         </com.inf2c.doppleapp.carousel.Carousel>
