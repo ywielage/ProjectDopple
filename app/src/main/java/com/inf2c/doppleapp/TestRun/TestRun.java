@@ -49,9 +49,6 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -104,6 +101,7 @@ public class TestRun extends AppCompatActivity {
     private LineGraphSeries<DataPoint> series;
     private LineGraphSeries<DataPoint> targetSeries;
     private boolean initialGraph;
+    private double intervalGraph;
 
     private String lastLapTime = "00:00:00";
 
@@ -195,7 +193,22 @@ public class TestRun extends AppCompatActivity {
         }
 
 
+//        graphData.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent popupWindow = new Intent(getApplicationContext(), PopupGraph.class);
+////                popupWindow.putExtra("data", (Serializable) list);
+//                graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
+//                popupWindow.putExtra("min", graphStartLimitEt.toString());
+//                graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
+//                popupWindow.putExtra("max", graphEndLimitEt.toString());
+//                startActivity(popupWindow);
+//            }
+//        });
+
+
         submitGraphLimitsBtn = (Button) findViewById(R.id.submitGraphLimitsBtn);
+
 
         submitGraphLimitsBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -311,6 +324,8 @@ public class TestRun extends AppCompatActivity {
         long x;
         double y = 0.0;
         Date startTime = null;
+        double intervalImplementCount = 0.0;
+        intervalGraph = 10.0;
         for(int i = 0; i<this.list.size();i++) {
             String[] dateSplit = new Date(this.list.get(i).getTime()).toString().split(" ");
             String[] timeSplit = dateSplit[3].split(":");
@@ -343,11 +358,14 @@ public class TestRun extends AppCompatActivity {
                     y = Calculations.getDutyFactor((this.list.get(i).getContactTime()), flighttime);
                     break;
             }
-
-            series.appendData(new DataPoint(x, y), true, list.size());
-            if(!initialGraph){
-                long graphTarget = Long.parseLong(String.valueOf(graphTargetET.getText()));
-                targetSeries.appendData(new DataPoint(x, graphTarget), true ,list.size());
+            intervalImplementCount++;
+            if(intervalImplementCount == intervalGraph){
+                series.appendData(new DataPoint(x, y), true, list.size());
+                if(!initialGraph){
+                    long graphTarget = Long.parseLong(String.valueOf(graphTargetET.getText()));
+                    targetSeries.appendData(new DataPoint(x, graphTarget), true ,list.size());
+                }
+                intervalImplementCount = 0;
             }
         }
 
@@ -356,7 +374,7 @@ public class TestRun extends AppCompatActivity {
         graphData.getViewport().setMaxX(endSecond);
         graphData.getViewport().setXAxisBoundsManual(true);
         if(!initialGraph){
-            targetSeries.setColor(Color.YELLOW);
+            targetSeries.setColor(Color.GREEN);
             graphData.addSeries(targetSeries);
         }
         graphData.addSeries(series);

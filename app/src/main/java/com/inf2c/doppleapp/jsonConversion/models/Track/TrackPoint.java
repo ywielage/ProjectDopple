@@ -1,6 +1,8 @@
 package com.inf2c.doppleapp.jsonConversion.models.Track;
 
-public class TrackPoint {
+import java.io.Serializable;
+
+public class TrackPoint implements Serializable {
     private String timeStamp;
     private String longitude;
     private String latitude;
