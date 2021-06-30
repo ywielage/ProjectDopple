@@ -109,21 +109,23 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint="Start"
-                            android:inputType="textPersonName" />
+                            android:inputType="number"
+                            />
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"/>
+                            android:orientation="vertical" />
 
                         <EditText
                             android:id="@+id/graphEndLimitEt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:hint="End" />
+                            android:hint="End"
+                            android:inputType="number"
+                            />
 
                         <EditText
                             android:id="@+id/graphInvervalET"
@@ -131,14 +133,15 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint=" Target Average"
-                            android:inputType="textPersonName" />
+                            android:inputType="number"
+                            />
 
                         <Spinner
                             android:id="@+id/selectDataSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown"/>
+                            android:spinnerMode="dropdown" />
 
                     </LinearLayout>
 
