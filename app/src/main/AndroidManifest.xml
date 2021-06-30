@@ -79,6 +79,10 @@
         <activity
             android:name=".MainActivity" />
 
+        <activity android:name=".TestRun.PopupGraph"
+            android:theme="@style/AppTheme.CustomTheme"
+            />
+
         <activity android:name=".TestRun.TestRun"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">

@@ -109,21 +109,22 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint="Start"
-                            android:inputType="textPersonName" />
+                            android:inputType="number" />
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"/>
+                            android:orientation="vertical" />
 
                         <EditText
                             android:id="@+id/graphEndLimitEt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:hint="End" />
+                            android:hint="End"
+                            android:inputType="textPersonName" />
+                        android:inputType="number"
 
                         <EditText
                             android:id="@+id/graphInvervalET"
@@ -131,14 +132,14 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint=" Target Average"
-                            android:inputType="textPersonName" />
+                            android:inputType="number" />
 
                         <Spinner
                             android:id="@+id/selectDataSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown"/>
+                            android:spinnerMode="dropdown" />
 
                     </LinearLayout>
 
@@ -147,6 +148,73 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Button" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minWidth="200dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <TextView
+                        android:id="@+id/feedbackTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="#ffffff"
+                        android:text="Feedback"
+                        android:textAlignment="textStart"
+                        android:textColor="#333333"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/dataWrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/bluetoothTitle"
+                        android:layout_marginBottom="12dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/feedback_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Dit uw feedback voor de stapfrequentie"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/feedback_title"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/feedback_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=".........."
+                                    android:textColor="#000000"
+                                    android:textSize="32dp"
+                                    android:textStyle="bold" />
+
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -194,10 +262,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0.26,09"
-                            android:textSize="26dp"
                             android:textAlignment="center"
-                            android:textStyle="bold"
-                            />
+                            android:textSize="26dp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
 
@@ -253,6 +320,7 @@
                     </ScrollView>
 
                 </LinearLayout>
+
                 <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -917,25 +985,6 @@
                             </RelativeLayout>
                         </RelativeLayout>
                     </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <com.jjoe64.graphview.GraphView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/graph"
-                            />
-                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
         </com.inf2c.doppleapp.carousel.Carousel>
