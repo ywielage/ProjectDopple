@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -307,8 +308,6 @@ public class DataActivity extends AppCompatActivity {
             DoppleLog.d(TAG, "lap: " + lap);
             currentLap++;
 
-
-
             String endTime = lap;
             LinearLayout wrapper = new LinearLayout(this);
             wrapper.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -325,7 +324,7 @@ public class DataActivity extends AppCompatActivity {
                 DoppleLog.e(TAG, e.getMessage());
             }
             long difference = date2.getTime() - date1.getTime();
-            String duration = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(difference),
+            @SuppressLint("DefaultLocale") String duration = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(difference),
                     TimeUnit.MILLISECONDS.toMinutes(difference) % TimeUnit.HOURS.toMinutes(1),
                     TimeUnit.MILLISECONDS.toSeconds(difference) % TimeUnit.MINUTES.toSeconds(1));
 

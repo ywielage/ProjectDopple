@@ -1,5 +1,6 @@
 package com.inf2c.doppleapp.TestRun;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.inf2c.doppleapp.R;
@@ -114,48 +116,48 @@ public class TestRun extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_run);
 
-//        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
-//        if(!isBLEServiceRunning(BLEConnectionService.class)){
-//            setContentView(R.layout.loading_screen);
-//
-//            //set name and address
-//            Intent invokedIntent = getIntent();
-//            BLEDeviceName = invokedIntent.getStringExtra("EXTRA_DOPPLE_DEVICE_NAME");
-//            BLEAddress = invokedIntent.getStringExtra("EXTRA_DOPPLE_DEVICE_ADDRESS");
-//            if(BLEDeviceName.equals("Sample Earbuds") || BLEAddress.equals("12:34:56:78")){
-//                //if sample device -> run this :)
-//                setContentView(R.layout.test_run);
-//                setupCarousel();
-//                assignListeners();
-//                setupView();
-//
-//                Intent gattServiceIntent = new Intent(this, BLEConnectionService.class);
-//                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_NAME", BLEDeviceName);
-//                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_ADDRESS", BLEAddress);
-//                startService(gattServiceIntent);
-//                setupServiceEventReceiver();
-//            }
-//            else{
-//                //enable the gatt service
-//                Intent gattServiceIntent = new Intent(this, BLEConnectionService.class);
-//                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_NAME", BLEDeviceName);
-//                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_ADDRESS", BLEAddress);
-//                startService(gattServiceIntent);
-//                setupServiceEventReceiver();
-//            }
-//        }
-//        else {
-//            setContentView(R.layout.test_run);
-//            setupServiceEventReceiver();
-//            assignListeners();
-//            setupView();
-//
-//            //because of the running service, request some parameters from the service.
-//            sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_REQUEST_DEVICE_VALUES));
-//        }
-//
-//        //request status
-//        sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_REQUEST_RECORDING));
+        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
+        if(!isBLEServiceRunning(BLEConnectionService.class)){
+            setContentView(R.layout.loading_screen);
+
+            //set name and address
+            Intent invokedIntent = getIntent();
+            BLEDeviceName = invokedIntent.getStringExtra("EXTRA_DOPPLE_DEVICE_NAME");
+            BLEAddress = invokedIntent.getStringExtra("EXTRA_DOPPLE_DEVICE_ADDRESS");
+            if(BLEDeviceName.equals("Sample Earbuds") || BLEAddress.equals("12:34:56:78")){
+                //if sample device -> run this :)
+                setContentView(R.layout.test_run);
+                setupCarousel();
+                assignListeners();
+                setupView();
+
+                Intent gattServiceIntent = new Intent(this, BLEConnectionService.class);
+                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_NAME", BLEDeviceName);
+                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_ADDRESS", BLEAddress);
+                startService(gattServiceIntent);
+                setupServiceEventReceiver();
+            }
+            else{
+                //enable the gatt service
+                Intent gattServiceIntent = new Intent(this, BLEConnectionService.class);
+                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_NAME", BLEDeviceName);
+                gattServiceIntent.putExtra("EXTRA_DOPPLE_DEVICE_ADDRESS", BLEAddress);
+                startService(gattServiceIntent);
+                setupServiceEventReceiver();
+            }
+        }
+        else {
+            setContentView(R.layout.test_run);
+            setupServiceEventReceiver();
+            assignListeners();
+            setupView();
+
+            //because of the running service, request some parameters from the service.
+            sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_REQUEST_DEVICE_VALUES));
+        }
+
+        //request status
+        sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_REQUEST_RECORDING));
 
 
         InputStream object = this.getResources().openRawResource(R.raw.dopple_session_20210511164705_1);
@@ -376,17 +378,6 @@ public class TestRun extends AppCompatActivity {
         testLapActualTimeLabel = findViewById(R.id.testLapActualTime);
         testLapTime = findViewById(R.id.testLapTime);
         testSessionBtnImage = findViewById(R.id.testSessionBtnLogo);
-
-        /*
-        testSessionBtn.setOnClickListener(new View.OnClickListener(){
-
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view){
-                startRecordingSession();
-            }
-        });
-         */
 
         testSessionBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
