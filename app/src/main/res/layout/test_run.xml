@@ -109,7 +109,8 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint="Start"
-                            android:inputType="textPersonName" />
+                            android:inputType="number"
+                            />
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
@@ -124,6 +125,7 @@
                             android:ems="10"
                             android:hint="End"
                             android:inputType="textPersonName" />
+                            android:inputType="number"
 
                         <EditText
                             android:id="@+id/graphInvervalET"
@@ -131,7 +133,8 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint=" Target Average"
-                            android:inputType="textPersonName" />
+                            android:inputType="number"
+                            />
 
                         <Spinner
                             android:id="@+id/selectDataSpinner"
@@ -139,7 +142,6 @@
                             android:layout_height="wrap_content"
                             android:background="@android:drawable/btn_dropdown"
                             android:spinnerMode="dropdown" />
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
