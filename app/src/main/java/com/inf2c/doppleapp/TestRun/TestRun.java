@@ -56,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 public class TestRun extends AppCompatActivity {
 
@@ -187,6 +188,7 @@ public class TestRun extends AppCompatActivity {
         selectDataSpinner.setAdapter(adapter);
         initialGraph = true;
         try {
+            giveFeedback("Step frequency");
             createGraph(0,300, "Step frequency");
         } catch (ParseException e) {
             e.printStackTrace();
@@ -245,6 +247,50 @@ public class TestRun extends AppCompatActivity {
 
             }
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void giveFeedback(String data)
+    {
+        int goalMinimum = 130;
+        int goalMaximum = 160;
+
+        float underMinimum = 0;
+        float overMaximum = 0;
+
+        double stat;
+
+        for(int i = 0; i < this.list.size(); i++) {
+            switch (data) {
+                case "Contact time":
+                    stat = this.list.get(i).getContactTime();
+                    break;
+//                case "Flight time":
+//                    stat = Calculations.getFlightTime(Math.toIntExact(x), this.list.get(i).getContactTime(), this.list.get(i).getSteps()); // TODO
+//                    break;
+//                case "Duty factor":
+//                    int flighttime = Calculations.getFlightTime(Math.toIntExact(x),this.list.get(i).getContactTime(), this.list.get(i).getSteps());
+//                    stat = Calculations.getDutyFactor((this.list.get(i).getContactTime()), flighttime);
+//                    break;
+                default:
+                    stat = this.list.get(i).getStepFrequency();
+                    break;
+            }
+            if(stat < goalMinimum)
+            {
+                underMinimum++;
+            }
+            else if(stat > goalMaximum)
+            {
+                overMaximum++;
+            }
+        }
+
+        float underMinimumPercent = Math.round(underMinimum / list.size() * 10000f) / 100f;
+        float overMaximumPercent = Math.round(overMaximum / list.size() * 10000f) / 100f;
+
+        System.out.println("You're under your minimum " + underMinimumPercent + "% of the time");
+        System.out.println("You're over your maximum " + overMaximumPercent + "% of the time");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
