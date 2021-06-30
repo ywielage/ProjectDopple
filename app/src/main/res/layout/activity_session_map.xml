@@ -188,7 +188,12 @@
                     </RelativeLayout>
                 </LinearLayout>
 
+                <com.jjoe64.graphview.GraphView
+                    android:id="@+id/graphData2"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp">
 
+                </com.jjoe64.graphview.GraphView>
 
 
             </LinearLayout>

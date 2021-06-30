@@ -95,59 +95,70 @@
 
 
                     <LinearLayout
-                        android:id="@+id/rawDataWrapper"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/GraphTitle"
-                        android:baselineAligned="false"
-                        android:orientation="vertical">
+                        android:minWidth="200dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp">
 
 
                         <EditText
                             android:id="@+id/graphStartLimitEt"
-                            android:layout_width="match_parent"
+                            android:layout_width="141dp"
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint="Start"
                             android:inputType="number" />
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical" />
-
                         <EditText
                             android:id="@+id/graphEndLimitEt"
-                            android:layout_width="match_parent"
+                            android:layout_width="155dp"
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint="End"
-                            android:inputType="textPersonName" />
-                        android:inputType="number"
+                            android:inputType="number" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minWidth="200dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp">
+
 
                         <EditText
                             android:id="@+id/graphInvervalET"
-                            android:layout_width="match_parent"
+                            android:layout_width="141dp"
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint=" Target Average"
                             android:inputType="number" />
 
-                        <Spinner
-                            android:id="@+id/selectDataSpinner"
-                            android:layout_width="match_parent"
+                        <EditText
+                            android:id="@+id/graphInvervalET2"
+                            android:layout_width="170dp"
                             android:layout_height="wrap_content"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Interval"
+                            android:inputType="number" />
                     </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/selectDataSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
 
                     <Button
                         android:id="@+id/submitGraphLimitsBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Button" />
+                        android:background="@color/colorPrimaryDark"
+                        android:text="Update grafiek" />
 
                 </LinearLayout>
 
