@@ -137,7 +137,7 @@
                             android:inputType="number" />
 
                         <EditText
-                            android:id="@+id/graphInvervalET2"
+                            android:id="@+id/graphIntervalET"
                             android:layout_width="170dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

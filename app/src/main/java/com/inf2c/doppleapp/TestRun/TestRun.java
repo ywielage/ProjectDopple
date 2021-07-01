@@ -106,6 +106,7 @@ public class TestRun extends AppCompatActivity {
     private LineGraphSeries<DataPoint> targetSeries;
     private boolean initialGraph;
     private double intervalGraph;
+    private EditText graphIntervalET;
 
     private String lastLapTime = "00:00:00";
 
@@ -185,6 +186,8 @@ public class TestRun extends AppCompatActivity {
         feedbackValue = (TextView) findViewById(R.id.feedback_value);
 
         selectDataSpinner = findViewById(R.id.selectDataSpinner);
+
+        graphIntervalET = (EditText) findViewById(R.id.graphInvervalET);
 
         String[] items = new String[]{"Step frequency", "Contact time", "Flight time", "Duty factor"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
@@ -354,6 +357,7 @@ public class TestRun extends AppCompatActivity {
         Date startTime = null;
         double intervalImplementCount = 0.0;
         intervalGraph = 10.0;
+        ArrayList<Double> intervalList = new ArrayList<Double>();
         for(int i = 0; i<this.list.size();i++) {
             String[] dateSplit = new Date(this.list.get(i).getTime()).toString().split(" ");
             String[] timeSplit = dateSplit[3].split(":");
@@ -388,12 +392,19 @@ public class TestRun extends AppCompatActivity {
             }
             intervalImplementCount++;
             if(intervalImplementCount == intervalGraph){
-                series.appendData(new DataPoint(x, y), true, list.size());
-                if(!initialGraph){
+                Double avg = intervalList.stream().mapToDouble(val -> val).average().orElse(0.0);
+                series.appendData(new DataPoint(x, avg), true, list.size());
+                intervalImplementCount = 0.0;
+                intervalList.clear();
+            }
+            else if(intervalImplementCount < intervalGraph){
+                intervalList.add(y);
+            }
+            if(!initialGraph){
+                if(!graphTargetET.getText().toString().equals("")){
                     long graphTarget = Long.parseLong(String.valueOf(graphTargetET.getText()));
                     targetSeries.appendData(new DataPoint(x, graphTarget), true ,list.size());
                 }
-                intervalImplementCount = 0;
             }
         }
 
