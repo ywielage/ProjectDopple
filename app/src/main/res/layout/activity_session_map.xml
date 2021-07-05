@@ -6,264 +6,435 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     tools:context=".SessionMapActivity">
+
     <RelativeLayout
         android:id="@+id/mLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
         android:orientation="horizontal"
-        android:padding="30dp"
         tools:layout_editor_absoluteY="230dp">
-        <ImageView
-            android:id="@+id/backButton"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            app:srcCompat="@drawable/back_arrow" />
-        <LinearLayout
-            android:id="@+id/topMenu"
-            android:orientation="horizontal"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
+
+        <RelativeLayout
+            android:id="@+id/doppleMenu"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+            android:padding="30dp">
+
             <ImageView
+                android:id="@+id/backButton"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                app:srcCompat="@drawable/bluetooth_connected"
-                android:layout_alignBaseline="@+id/backButton"/>
-            <TextView
-                android:id="@+id/deviceName"
-                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/back_arrow" />
+
+            <LinearLayout
+                android:id="@+id/topMenu"
                 android:layout_width="wrap_content"
-                android:text="Bram's oortjes"
-                android:textSize="18dp"
-                android:textColor="#1ACE78"
-                android:textStyle="bold"
-                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_alignBaseline="@+id/backButton"/>
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignBaseline="@+id/backButton"
+                    app:srcCompat="@drawable/bluetooth_connected" />
 
-        <TextView
-            android:id="@+id/filesTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/topMenu"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="-5dp"
-            android:text="Sessie van 9/3/2020"
-            android:textAlignment="textStart"
-            android:textColor="#333333"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/filesSubTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/filesTitle"
-            android:text="Om 9:03 's ochtends"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="12dp"/>
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="270dp"
-            android:layout_below="@id/filesSubTitle"
-            tools:context=".SessionMapActivity"
-            android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:id="@+id/deviceName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/backButton"
+                    android:layout_marginLeft="5dp"
+                    android:text="Marvins oortjes"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#1ACE78"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/btnCenter"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignTop="@id/map"
-            android:layout_alignEnd="@id/map"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/dopple_center_map"
-            android:backgroundTint="#1ACE78" />
+        <com.inf2c.doppleapp.carousel.Carousel
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/doppleMenu">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_below="@id/map">
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/dataWrapper"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="match_parent"
+                    android:minWidth="200dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
 
-                    <RelativeLayout
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/feedbackTitle"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_marginBottom="12dp"
+                        android:background="#ffffff"
+                        android:text="Feedback"
+                        android:textAlignment="textStart"
+                        android:textColor="#333333"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/distance_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Afstand"
-                            android:textColor="#000000"
-                            android:textSize="20dp"
-                            android:textAlignment="center"/>
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/distance_title"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:layout_centerHorizontal="true">
-
-                            <TextView
-                                android:id="@+id/distance_value"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="---"
-                                android:textColor="#000000"
-                                android:textSize="32dp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/distance_unit"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignBaseline="@+id/distance_value"
-                                android:layout_marginLeft="2dp"
-                                android:layout_toRightOf="@+id/distance_value"
-                                android:text="km"
-                                android:textColor="#777777"
-                                android:textSize="20dp"
-                                android:textStyle="bold" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:id="@+id/speed_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Stappen"
-                            android:textColor="#000000"
-                            android:textSize="20dp"
-                            android:textAlignment="center"/>
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/speed_title"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:layout_centerHorizontal="true">
-
-                            <TextView
-                                android:id="@+id/amount_steps_value"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="00000"
-                                android:textColor="#000000"
-                                android:textSize="32dp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/amount_steps_unit"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@+id/amount_steps_value"
-                                android:layout_centerVertical="true"
-                                android:src="@drawable/steps_icon" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
-            android:background="#fefefe">
-
-                <RelativeLayout
-                    android:id="@+id/btnShareCSVLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:layout_marginStart="20dp">
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:id="@+id/dataWrapperMain"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_centerInParent="true"
-                        android:gravity="center_vertical">
+                        android:layout_below="@+id/bluetoothTitle"
+                        android:layout_marginBottom="12dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
 
-                        <Button
-                            android:id="@+id/btnShareCSV"
-                            android:layout_width="68dp"
+                        <RelativeLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:text="CSV"
-                            android:textColor="#1ACE78"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
-                        <ImageView
-                            android:id="@+id/btnIconCSV"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:tint="#1ACE78"
-                            android:src="@drawable/share"/>
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/feedback_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Dit is jouw feedback voor deze sessie"
+                                android:textAlignment="textStart"
+                                android:textColor="#000000"
+                                android:textSize="20dp" />
+
+                        </RelativeLayout>
+
                     </LinearLayout>
-                </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/btnShareTCXLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:layout_marginEnd="20dp"
 
-                    >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/feedback_value"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_centerInParent="true"
-                        android:gravity="center_vertical">
+                        android:textAlignment="textStart"
+                        android:textColor="#000000"
+                        android:textSize="16dp" />
 
-                        <Button
-                            android:id="@+id/btnShareTCX"
-                            android:layout_width="68dp"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:text="TCX"
-                            android:textColor="#1ACE78"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
-                        <ImageView
-                            android:id="@+id/btnIconTCX"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:tint="#1ACE78"
-                            android:src="@drawable/share"/>
                 </LinearLayout>
-            </RelativeLayout>
-        </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minWidth="200dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <com.jjoe64.graphview.GraphView
+                        android:id="@+id/graphData"
+                        android:layout_width="326dp"
+                        android:layout_height="204dp">
+
+                    </com.jjoe64.graphview.GraphView>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minWidth="200dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp">
+
+
+                        <EditText
+                            android:id="@+id/graphStartLimitEt"
+                            android:layout_width="141dp"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="Start"
+                            android:inputType="number" />
+
+                        <EditText
+                            android:id="@+id/graphEndLimitEt"
+                            android:layout_width="155dp"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="End"
+                            android:inputType="number" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minWidth="200dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp">
+
+
+                        <EditText
+                            android:id="@+id/graphInvervalET"
+                            android:layout_width="141dp"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint=" Target Average"
+                            android:inputType="number" />
+
+                        <EditText
+                            android:id="@+id/graphIntervalET"
+                            android:layout_width="170dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Interval"
+                            android:inputType="number" />
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/selectDataSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                    <Button
+                        android:id="@+id/submitGraphLimitsBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimaryDark"
+                        android:text="Update grafiek" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/filesTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="-5dp"
+                        android:text="Sessie van 9/3/2020"
+                        android:textAlignment="textStart"
+                        android:textColor="#333333"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/filesSubTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="12dp"
+                        android:text="Om 9:03 's ochtends" />
+
+                    <fragment
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="270dp"
+                        android:layout_marginBottom="6dp"
+                        tools:context=".SessionMapActivity" />
+
+                    <ImageButton
+                        android:id="@+id/btnCenter"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/dopple_center_map"
+                        android:backgroundTint="#1ACE78" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/dataWrapper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/distance_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Afstand"
+                                    android:textAlignment="center"
+                                    android:textColor="#000000"
+                                    android:textSize="20dp" />
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/distance_title"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/distance_value"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="---"
+                                        android:textColor="#000000"
+                                        android:textSize="32dp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/distance_unit"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignBaseline="@+id/distance_value"
+                                        android:layout_marginLeft="2dp"
+                                        android:layout_toRightOf="@+id/distance_value"
+                                        android:text="km"
+                                        android:textColor="#777777"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold" />
+                                </RelativeLayout>
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:id="@+id/speed_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Stappen"
+                                    android:textAlignment="center"
+                                    android:textColor="#000000"
+                                    android:textSize="20dp" />
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/speed_title"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/amount_steps_value"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="00000"
+                                        android:textColor="#000000"
+                                        android:textSize="32dp"
+                                        android:textStyle="bold" />
+
+                                    <ImageView
+                                        android:id="@+id/amount_steps_unit"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_toRightOf="@+id/amount_steps_value"
+                                        android:src="@drawable/steps_icon" />
+                                </RelativeLayout>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#fefefe"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/btnShareCSVLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_weight="1"
+                            android:clickable="true">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:id="@+id/btnShareCSV"
+                                    android:layout_width="68dp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/transparent"
+                                    android:text="CSV"
+                                    android:textColor="#1ACE78"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/btnIconCSV"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:src="@drawable/share"
+                                    android:tint="#1ACE78" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/btnShareTCXLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:layout_weight="1"
+                            android:clickable="true"
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:id="@+id/btnShareTCX"
+                                    android:layout_width="68dp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/transparent"
+                                    android:text="TCX"
+                                    android:textColor="#1ACE78"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/btnIconTCX"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:src="@drawable/share"
+                                    android:tint="#1ACE78" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.inf2c.doppleapp.carousel.Carousel>
 
 
     </RelativeLayout>
