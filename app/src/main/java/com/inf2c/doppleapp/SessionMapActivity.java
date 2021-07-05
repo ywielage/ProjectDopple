@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,13 +24,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.inf2c.doppleapp.TestRun.Calculations;
+import com.inf2c.doppleapp.TestRun.TestXMLParser;
+import com.inf2c.doppleapp.TestRun.Trackpoint;
 import com.inf2c.doppleapp.conversion.DoppleConversion;
 import com.inf2c.doppleapp.conversion.DoppleDataObject;
 import com.inf2c.doppleapp.export.DoppleFileHandler;
 import com.inf2c.doppleapp.export.ExportFileType;
 import com.inf2c.doppleapp.gps.GPSLocation;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.io.File;
+import java.io.InputStream;
 import java.text.FieldPosition;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,6 +57,15 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
     private GoogleMap map;
     private LatLngBounds bound;
 
+    private List<Trackpoint> list;
+    private boolean initialGraph;
+    private Button submitGraphLimitsBtn;
+    private EditText graphStartLimitEt;
+    private EditText graphEndLimitEt;
+    private EditText graphTargetET;
+    private Spinner selectDataSpinner;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +79,10 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         FileName = invokedIntent.getStringExtra("EXTRA_DOPPLE_FILE_NAME");
 
         fileHandler = new DoppleFileHandler(this, BLEDeviceName, BLEAddress);
+        initialGraph = true;
 
+        setXML();
+        setFeedback("stepFrequency", 120, 150);
         setupView();
         assignListeners();
         Date fileDate = parseTitleToTime(FileName.split("_")[2]);
@@ -153,6 +174,172 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         });
     }
 
+    private void setXML()
+    {
+        //TODO Change this line to take the currently selected file
+        InputStream object = this.getResources().openRawResource(R.raw.dopple_session_20210511164705_1);
+        TestXMLParser parser = new TestXMLParser();
+        this.list = parser.parse(object);
+    }
+
+    private void setFeedback(String data, int goalMinimum, int goalMaximum)
+    {
+        float underMinimum = 0;
+        float overMaximum = 0;
+        String nlData = "";
+
+        TextView feedbackValue = findViewById(R.id.feedback_value);
+
+        double stat;
+
+        for(int i = 0; i < list.size(); i++) {
+            switch (data) {
+                case "Contact time":
+                    stat = list.get(i).getContactTime();
+                    nlData = "contacttijd";
+                    break;
+                default:
+                    stat = list.get(i).getStepFrequency();
+                    nlData = "stapfrequentie";
+                    break;
+            }
+            if(stat < goalMinimum)
+            {
+                underMinimum++;
+            }
+            else if(stat > goalMaximum)
+            {
+                overMaximum++;
+            }
+        }
+
+        float underMinimumPercent = Math.round(underMinimum / list.size() * 10000f) / 100f;
+        float overMaximumPercent = Math.round(overMaximum / list.size() * 10000f) / 100f;
+
+        feedbackValue.append(String.format("Onder minimum %s%% van de tijd", underMinimumPercent));
+        feedbackValue.append(String.format("\nBoven maximum %s%% van de tijd", overMaximumPercent));
+        feedbackValue.append(getFeedbackString(underMinimumPercent, overMaximumPercent, nlData));
+    }
+
+    private String getFeedbackString(float underMinimumPercent, float overMaximumPercent, String nlData)
+    {
+        if(underMinimumPercent > 15 && overMaximumPercent > 15)
+        {
+            return "\nProbeer een meer regelmatige stapfrequentie te krijgen";
+        }
+        else if(underMinimumPercent > overMaximumPercent)
+        {
+            if(underMinimumPercent > 10 && underMinimumPercent <= 20)
+            {
+                return String.format("\nProbeer je %s te verhogen", nlData);
+            }
+            else if(underMinimumPercent > 20)
+            {
+                return String.format("\nProbeer je %s regelmatig te verhogen", nlData);
+            }
+        }
+        else if(underMinimumPercent < overMaximumPercent)
+        {
+            if(overMaximumPercent > 10 && overMaximumPercent <= 20)
+            {
+                return String.format("\nProbeer je %s te verlagen", nlData);
+            }
+            else if(overMaximumPercent > 20)
+            {
+                return String.format("\nProbeer je %s regelmatig te verlagen", nlData);
+            }
+        }
+        else
+        {
+            return String.format("\nJe zit op een juiste %s", nlData);
+        }
+        return  "";
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createGraph(int startSecond, int endSecond, String data) throws ParseException {
+
+        GraphView graphData = (GraphView) findViewById(R.id.graphData);
+        graphTargetET = (EditText) findViewById(R.id.graphInvervalET);
+
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
+        LineGraphSeries<DataPoint> targetSeries = new LineGraphSeries<DataPoint>();
+        GridLabelRenderer gridLabelRenderer = graphData.getGridLabelRenderer();
+        gridLabelRenderer.setHorizontalAxisTitle("Time");
+        gridLabelRenderer.setVerticalAxisTitle(data);
+
+        if(graphData.getSeries().size() > 0) {
+            graphData.removeAllSeries();
+        }
+
+
+        long x;
+        double y = 0.0;
+        Date startTime = null;
+        double intervalImplementCount = 0.0;
+        double intervalGraph = 10.0;
+        ArrayList<Double> intervalList = new ArrayList<Double>();
+        for(int i = 0; i<this.list.size();i++) {
+            String[] dateSplit = new Date(this.list.get(i).getTime()).toString().split(" ");
+            String[] timeSplit = dateSplit[3].split(":");
+
+            String time = timeSplit[0] + "-" + timeSplit[1] + "-" + timeSplit[2];
+            Date currTime = new SimpleDateFormat("hh-mm-ss").parse(time);
+
+
+            if(i == 0) {
+                startTime = new SimpleDateFormat("hh-mm-ss").parse(time);
+                x = 0;
+            }
+            else {
+                long diff = currTime.getTime() - startTime.getTime();
+                x = diff / 1000; // TODO %60
+            }
+
+            switch (data) {
+                case "Step frequency":
+                    y = this.list.get(i).getStepFrequency();
+                    break;
+                case "Contact time":
+                    y = this.list.get(i).getContactTime();
+                    break;
+                case "Flight time":
+                    y = Calculations.getFlightTime(Math.toIntExact(x),this.list.get(i).getContactTime(), this.list.get(i).getSteps()); // TODO
+                    break;
+                case "Duty factor":
+                    int flighttime = Calculations.getFlightTime(Math.toIntExact(x),this.list.get(i).getContactTime(), this.list.get(i).getSteps());
+                    y = Calculations.getDutyFactor((this.list.get(i).getContactTime()), flighttime);
+                    break;
+            }
+            intervalImplementCount++;
+            if(intervalImplementCount == intervalGraph){
+                Double avg = intervalList.stream().mapToDouble(val -> val).average().orElse(0.0);
+                series.appendData(new DataPoint(x, avg), true, list.size());
+                intervalImplementCount = 0.0;
+                intervalList.clear();
+            }
+            else if(intervalImplementCount < intervalGraph){
+                intervalList.add(y);
+            }
+            if(!initialGraph){
+                if(!graphTargetET.getText().toString().equals("")){
+                    long graphTarget = Long.parseLong(String.valueOf(graphTargetET.getText()));
+                    targetSeries.appendData(new DataPoint(x, graphTarget), true ,list.size());
+                }
+            }
+        }
+
+
+        graphData.getViewport().setMinX(startSecond);
+        graphData.getViewport().setMaxX(endSecond);
+        graphData.getViewport().setXAxisBoundsManual(true);
+        if(!initialGraph){
+            targetSeries.setColor(Color.GREEN);
+            graphData.addSeries(targetSeries);
+        }
+        graphData.addSeries(series);
+    }
+
     /**
      * Function that connects all listener events to the UI items
      */
@@ -161,6 +348,29 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         ImageView btnBack = findViewById(R.id.backButton);
         btnBack.setOnClickListener(view -> finish());
         findViewById(R.id.btnCenter).setOnClickListener(v -> map.animateCamera(CameraUpdateFactory.newLatLngBounds(bound, 100), 1000, null));
+        submitGraphLimitsBtn = (Button) findViewById(R.id.submitGraphLimitsBtn);
+
+
+        submitGraphLimitsBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                initialGraph = false;
+                selectDataSpinner = findViewById(R.id.selectDataSpinner);
+                graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
+                graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
+                graphTargetET = (EditText) findViewById(R.id.graphInvervalET);
+                float targetFloat = Float.parseFloat(String.valueOf(graphTargetET.getText()));
+
+                if(graphStartLimitEt.getText().length() > 0 || graphEndLimitEt.getText().length() > 0 ) {
+                    try {
+                        createGraph(Integer.parseInt(String.valueOf(graphStartLimitEt.getText())), Integer.parseInt(String.valueOf(graphEndLimitEt.getText())), selectDataSpinner.getSelectedItem().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
