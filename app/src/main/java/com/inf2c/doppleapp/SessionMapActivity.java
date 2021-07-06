@@ -200,7 +200,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
     private void setXML() throws FileNotFoundException {
         //TODO Change this line to take the currently selected file
         File pathObject = new File(this.getExternalFilesDir(null), "RecordedSessions");
-        File fileToShare = new File(pathObject, FileName);
+        File fileToShare = new File(pathObject, FileName + ".tcx");
         FileInputStream fis = new FileInputStream(fileToShare);
         TestXMLParser parser = new TestXMLParser();
         this.list = parser.parse(fis);
