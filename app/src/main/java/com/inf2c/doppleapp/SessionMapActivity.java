@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,6 +58,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
     private GoogleMap map;
     private LatLngBounds bound;
 
+    private GraphView graphData;
     private List<Trackpoint> list;
     private boolean initialGraph;
     private Button submitGraphLimitsBtn;
@@ -77,6 +79,11 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         BLEAddress = invokedIntent.getStringExtra("EXTRA_DOPPLE_DEVICE_ADDRESS");
         FileLocation = invokedIntent.getStringExtra("EXTRA_DOPPLE_FILE_LOCATION");
         FileName = invokedIntent.getStringExtra("EXTRA_DOPPLE_FILE_NAME");
+
+        selectDataSpinner = findViewById(R.id.selectDataSpinner);
+        String[] items = new String[]{"Step frequency", "Contact time", "Flight time", "Duty factor"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
+        selectDataSpinner.setAdapter(adapter);
 
         fileHandler = new DoppleFileHandler(this, BLEDeviceName, BLEAddress);
         initialGraph = true;
@@ -259,7 +266,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createGraph(int startSecond, int endSecond, String data) throws ParseException {
 
-        GraphView graphData = (GraphView) findViewById(R.id.graphData);
+        graphData = (GraphView) findViewById(R.id.graphData);
         graphTargetET = (EditText) findViewById(R.id.graphInvervalET);
 
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
@@ -356,7 +363,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onClick(View view) {
                 initialGraph = false;
-                selectDataSpinner = findViewById(R.id.selectDataSpinner);
+
                 graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
                 graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
                 graphTargetET = (EditText) findViewById(R.id.graphInvervalET);
