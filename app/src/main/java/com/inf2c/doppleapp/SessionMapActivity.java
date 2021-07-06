@@ -67,6 +67,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
     private Button submitGraphLimitsBtn;
     private EditText graphStartLimitEt;
     private EditText graphEndLimitEt;
+    private EditText graphInvervalET;
     private EditText graphTargetET;
     private Spinner selectDataSpinner;
 
@@ -100,7 +101,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
 
         initialGraph = true;
         try {
-            setFeedback("Step frequency", 140, 160);
+            setFeedback(130, "Step frequency");
             createGraph(0,300, "Step frequency");
         } catch (ParseException e) {
             e.printStackTrace();
@@ -206,10 +207,12 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         this.list = parser.parse(fis);
     }
 
-    private void setFeedback(String data, int goalMinimum, int goalMaximum)
+    private void setFeedback(int targetAverage, String data)
     {
         float underMinimum = 0;
         float overMaximum = 0;
+        int goalMinimum = targetAverage - (targetAverage / 20);
+        int goalMaximum = targetAverage + (targetAverage / 20);
         String nlData = "";
 
         TextView feedbackValue = findViewById(R.id.feedback_value);
@@ -240,6 +243,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         float underMinimumPercent = Math.round(underMinimum / list.size() * 10000f) / 100f;
         float overMaximumPercent = Math.round(overMaximum / list.size() * 10000f) / 100f;
 
+        feedbackValue.setText("");
         feedbackValue.append(String.format("Onder minimum %s%% van de tijd", underMinimumPercent));
         feedbackValue.append(String.format("\nBoven maximum %s%% van de tijd", overMaximumPercent));
         feedbackValue.append(getFeedbackString(underMinimumPercent, overMaximumPercent, nlData));
@@ -383,11 +387,14 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
 
                 graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
                 graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
+                graphInvervalET = (EditText) findViewById(R.id.graphInvervalET);
                 graphTargetET = (EditText) findViewById(R.id.graphInvervalET);
                 float targetFloat = Float.parseFloat(String.valueOf(graphTargetET.getText()));
 
+
                 if(graphStartLimitEt.getText().length() > 0 || graphEndLimitEt.getText().length() > 0 ) {
                     try {
+                        setFeedback(Integer.parseInt(String.valueOf(graphInvervalET.getText())), String.valueOf(selectDataSpinner.getSelectedItem().toString()));
                         createGraph(Integer.parseInt(String.valueOf(graphStartLimitEt.getText())), Integer.parseInt(String.valueOf(graphEndLimitEt.getText())), selectDataSpinner.getSelectedItem().toString());
                     } catch (ParseException e) {
                         e.printStackTrace();
