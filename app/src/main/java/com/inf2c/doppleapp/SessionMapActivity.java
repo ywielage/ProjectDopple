@@ -402,7 +402,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
 
                 if(graphStartLimitEt.getText().length() > 0 || graphEndLimitEt.getText().length() > 0 ) {
                     try {
-                        setFeedback(Integer.parseInt(String.valueOf(graphIntervalET.getText())), String.valueOf(selectDataSpinner.getSelectedItem().toString()));
+                        setFeedback(Integer.parseInt(String.valueOf(graphTargetET.getText())), String.valueOf(selectDataSpinner.getSelectedItem().toString()));
                         createGraph(Integer.parseInt(String.valueOf(graphStartLimitEt.getText())), Integer.parseInt(String.valueOf(graphEndLimitEt.getText())), selectDataSpinner.getSelectedItem().toString());
                     } catch (ParseException e) {
                         e.printStackTrace();
