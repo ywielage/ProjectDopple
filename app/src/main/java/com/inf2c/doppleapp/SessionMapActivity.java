@@ -38,6 +38,9 @@ import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.FieldPosition;
 import java.text.ParseException;
@@ -88,7 +91,11 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         fileHandler = new DoppleFileHandler(this, BLEDeviceName, BLEAddress);
         initialGraph = true;
 
-        setXML();
+        try {
+            setXML();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         setFeedback("stepFrequency", 120, 150);
         setupView();
         assignListeners();
@@ -181,12 +188,13 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         });
     }
 
-    private void setXML()
-    {
+    private void setXML() throws FileNotFoundException {
         //TODO Change this line to take the currently selected file
-        InputStream object = this.getResources().openRawResource(R.raw.dopple_session_20210511164705_1);
+        File pathObject = new File(this.getExternalFilesDir(null), "RecordedSessions");
+        File fileToShare = new File(pathObject, FileName);
+        FileInputStream fis = new FileInputStream(fileToShare);
         TestXMLParser parser = new TestXMLParser();
-        this.list = parser.parse(object);
+        this.list = parser.parse(fis);
     }
 
     private void setFeedback(String data, int goalMinimum, int goalMaximum)
