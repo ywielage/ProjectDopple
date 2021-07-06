@@ -55,7 +55,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 public class TestRun extends AppCompatActivity {
 
@@ -187,7 +186,7 @@ public class TestRun extends AppCompatActivity {
 
         selectDataSpinner = findViewById(R.id.selectDataSpinner);
 
-        graphIntervalET = (EditText) findViewById(R.id.graphInvervalET);
+        graphIntervalET = (EditText) findViewById(R.id.graphTargetET);
 
         String[] items = new String[]{"Step frequency", "Contact time", "Flight time", "Duty factor"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
@@ -225,7 +224,7 @@ public class TestRun extends AppCompatActivity {
                 initialGraph = false;
                 graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
                 graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
-                graphTargetET = (EditText) findViewById(R.id.graphInvervalET);
+                graphTargetET = (EditText) findViewById(R.id.graphTargetET);
                 float targetFloat = Float.parseFloat(String.valueOf(graphTargetET.getText()));
 
 

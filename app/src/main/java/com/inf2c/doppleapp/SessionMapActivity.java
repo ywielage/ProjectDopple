@@ -41,7 +41,6 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.text.FieldPosition;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,8 +66,8 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
     private Button submitGraphLimitsBtn;
     private EditText graphStartLimitEt;
     private EditText graphEndLimitEt;
-    private EditText graphInvervalET;
     private EditText graphTargetET;
+    private EditText graphIntervalET;
     private Spinner selectDataSpinner;
 
 
@@ -288,7 +287,8 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
     private void createGraph(int startSecond, int endSecond, String data) throws ParseException {
 
         graphData = (GraphView) findViewById(R.id.graphData);
-        graphTargetET = (EditText) findViewById(R.id.graphInvervalET);
+        graphTargetET = (EditText) findViewById(R.id.graphTargetET);
+        graphIntervalET = (EditText) findViewById(R.id.graphIntervalET);
 
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
         LineGraphSeries<DataPoint> targetSeries = new LineGraphSeries<DataPoint>();
@@ -301,11 +301,18 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         }
 
 
+
         long x;
         double y = 0.0;
         Date startTime = null;
         double intervalImplementCount = 0.0;
         double intervalGraph = 10.0;
+
+        if(!graphIntervalET.getText().toString().equals("")){
+            intervalGraph = Double.parseDouble(String.valueOf(graphIntervalET.getText()));
+            intervalGraph += 1;
+        }
+
         ArrayList<Double> intervalList = new ArrayList<Double>();
         for(int i = 0; i<this.list.size();i++) {
             String[] dateSplit = new Date(this.list.get(i).getTime()).toString().split(" ");
@@ -387,14 +394,15 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
 
                 graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
                 graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
-                graphInvervalET = (EditText) findViewById(R.id.graphInvervalET);
-                graphTargetET = (EditText) findViewById(R.id.graphInvervalET);
+                graphIntervalET = (EditText) findViewById(R.id.graphIntervalET);
+                graphTargetET = (EditText) findViewById(R.id.graphTargetET);
+
                 float targetFloat = Float.parseFloat(String.valueOf(graphTargetET.getText()));
 
 
                 if(graphStartLimitEt.getText().length() > 0 || graphEndLimitEt.getText().length() > 0 ) {
                     try {
-                        setFeedback(Integer.parseInt(String.valueOf(graphInvervalET.getText())), String.valueOf(selectDataSpinner.getSelectedItem().toString()));
+                        setFeedback(Integer.parseInt(String.valueOf(graphIntervalET.getText())), String.valueOf(selectDataSpinner.getSelectedItem().toString()));
                         createGraph(Integer.parseInt(String.valueOf(graphStartLimitEt.getText())), Integer.parseInt(String.valueOf(graphEndLimitEt.getText())), selectDataSpinner.getSelectedItem().toString());
                     } catch (ParseException e) {
                         e.printStackTrace();
