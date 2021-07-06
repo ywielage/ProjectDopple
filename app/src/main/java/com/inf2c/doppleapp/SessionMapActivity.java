@@ -306,7 +306,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         double y = 0.0;
         Date startTime = null;
         double intervalImplementCount = 0.0;
-        double intervalGraph = 10.0;
+        double intervalGraph = 2.0;
 
         if(!graphIntervalET.getText().toString().equals("")){
             intervalGraph = Double.parseDouble(String.valueOf(graphIntervalET.getText()));
