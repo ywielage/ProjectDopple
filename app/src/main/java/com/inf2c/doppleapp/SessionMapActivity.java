@@ -68,6 +68,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
     private Spinner selectDataSpinner;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,16 +81,25 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         FileLocation = invokedIntent.getStringExtra("EXTRA_DOPPLE_FILE_LOCATION");
         FileName = invokedIntent.getStringExtra("EXTRA_DOPPLE_FILE_NAME");
 
+
         selectDataSpinner = findViewById(R.id.selectDataSpinner);
         String[] items = new String[]{"Step frequency", "Contact time", "Flight time", "Duty factor"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
         selectDataSpinner.setAdapter(adapter);
 
         fileHandler = new DoppleFileHandler(this, BLEDeviceName, BLEAddress);
-        initialGraph = true;
+
 
         setXML();
-        setFeedback("stepFrequency", 120, 150);
+
+        initialGraph = true;
+        try {
+            setFeedback("Step frequency", 140, 160);
+            createGraph(0,300, "Step frequency");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         setupView();
         assignListeners();
         Date fileDate = parseTitleToTime(FileName.split("_")[2]);
