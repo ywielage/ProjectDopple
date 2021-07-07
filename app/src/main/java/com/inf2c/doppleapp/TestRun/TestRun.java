@@ -591,15 +591,15 @@ public class TestRun extends AppCompatActivity {
             testSessionBtnImage.setImageResource(R.drawable.stop_icon_2);
             testSessionBtn.setBackgroundResource(R.drawable.red_round_btn);
             sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_START_RECORDING));
-            new CountDownTimer(5000, 10) {
+            new CountDownTimer(300000, 10) {
                 public void onTick(long millisUntilFinished) {}
                 public void onFinish() {
-                    Toast toast=Toast.makeText(getApplicationContext(),"hallo vanuit je timer!",Toast.LENGTH_SHORT);
+                    Toast toast=Toast.makeText(getApplicationContext(),"Testsessie maximale tijd bereikt",Toast.LENGTH_SHORT);
                     toast.show();
                     //TODO stop functie
-                    //testSessionBtnImage.setImageResource(R.drawable.play_icon);
-                    //testSessionBtn.setBackgroundResource(R.drawable.blue_round_btn);
-                    //sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_STOP_RECORDING));
+                    testSessionBtnImage.setImageResource(R.drawable.play_icon);
+                    testSessionBtn.setBackgroundResource(R.drawable.blue_round_btn);
+                    sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_STOP_RECORDING));
                 }
             }.start();
         }
