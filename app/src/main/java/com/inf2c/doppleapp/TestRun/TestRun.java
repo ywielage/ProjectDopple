@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -87,7 +88,7 @@ public class TestRun extends AppCompatActivity {
     private Fragment heartBeatFragment;
 
     private TextView feedbackValue;
-    
+
 //
     private String lastLapTime = "00:00:00";
 
@@ -590,6 +591,17 @@ public class TestRun extends AppCompatActivity {
             testSessionBtnImage.setImageResource(R.drawable.stop_icon_2);
             testSessionBtn.setBackgroundResource(R.drawable.red_round_btn);
             sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_START_RECORDING));
+            new CountDownTimer(5000, 10) {
+                public void onTick(long millisUntilFinished) {}
+                public void onFinish() {
+                    Toast toast=Toast.makeText(getApplicationContext(),"hallo vanuit je timer!",Toast.LENGTH_SHORT);
+                    toast.show();
+                    //TODO stop functie
+                    //testSessionBtnImage.setImageResource(R.drawable.play_icon);
+                    //testSessionBtn.setBackgroundResource(R.drawable.blue_round_btn);
+                    //sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_STOP_RECORDING));
+                }
+            }.start();
         }
         else{
             testSessionBtnImage.setImageResource(R.drawable.play_icon);
