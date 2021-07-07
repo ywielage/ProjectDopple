@@ -68,11 +68,8 @@ public class TestRun extends AppCompatActivity {
     private boolean isRecording = false;
     private boolean isConnected = false;
 
-    private TextView durationTv;
     private RelativeLayout testSessionBtn;
     private TextView testSessionBtnLabel;
-    private TextView testLapTime;
-    private TextView testLapActualTimeLabel;
 
     private ImageView testSessionBtnImage;
 
@@ -90,23 +87,8 @@ public class TestRun extends AppCompatActivity {
     private Fragment heartBeatFragment;
 
     private TextView feedbackValue;
-
-    private Spinner selectDataSpinner;
-
-    private List<Trackpoint> list;
-
-    private Button submitGraphLimitsBtn;
-    private EditText graphStartLimitEt;
-    private EditText graphEndLimitEt;
-    private EditText graphTargetET;
-
-    private GraphView graphData;
-    private LineGraphSeries<DataPoint> series;
-    private LineGraphSeries<DataPoint> targetSeries;
-    private boolean initialGraph;
-    private double intervalGraph;
-    private EditText graphIntervalET;
-
+    
+//
     private String lastLapTime = "00:00:00";
 
 
@@ -161,14 +143,9 @@ public class TestRun extends AppCompatActivity {
         sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_REQUEST_RECORDING));
 
 
-        InputStream object = this.getResources().openRawResource(R.raw.dopple_session_20210511164705_1);
-        TestXMLParser parser = new TestXMLParser();
-        this.list = parser.parse(object);
 
         //Get field ids
-        durationTv = (TextView) findViewById(R.id.durationTv);
         testSessionBtn = (RelativeLayout) findViewById(R.id.testStartSessionBtn);
-        testLapTime = (TextView) findViewById(R.id.testLapTime);
         testSessionBtnImage  = findViewById(R.id.testSessionBtnLogo);
         testSessionBtnLabel = findViewById(R.id.lblTestSessionControl);
 
@@ -184,78 +161,6 @@ public class TestRun extends AppCompatActivity {
         stepAvgFreqValue = (TextView) findViewById(R.id.TestAvgstepfreq_value);
         feedbackValue = (TextView) findViewById(R.id.feedback_value);
 
-        selectDataSpinner = findViewById(R.id.selectDataSpinner);
-
-        graphIntervalET = (EditText) findViewById(R.id.graphTargetET);
-
-        String[] items = new String[]{"Step frequency", "Contact time", "Flight time", "Duty factor"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
-        selectDataSpinner.setAdapter(adapter);
-        initialGraph = true;
-        try {
-            giveFeedback("Step frequency", 140, 160);
-            createGraph(0,300, "Step frequency");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-
-//        graphData.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent popupWindow = new Intent(getApplicationContext(), PopupGraph.class);
-////                popupWindow.putExtra("data", (Serializable) list);
-//                graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
-//                popupWindow.putExtra("min", graphStartLimitEt.toString());
-//                graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
-//                popupWindow.putExtra("max", graphEndLimitEt.toString());
-//                startActivity(popupWindow);
-//            }
-//        });
-
-
-        submitGraphLimitsBtn = (Button) findViewById(R.id.submitGraphLimitsBtn);
-
-
-        submitGraphLimitsBtn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View view) {
-                initialGraph = false;
-                graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
-                graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
-                graphTargetET = (EditText) findViewById(R.id.graphTargetET);
-                float targetFloat = Float.parseFloat(String.valueOf(graphTargetET.getText()));
-
-
-                if(graphStartLimitEt.getText().length() > 0 || graphEndLimitEt.getText().length() > 0 ) {
-                    try {
-                        createGraph(Integer.parseInt(String.valueOf(graphStartLimitEt.getText())), Integer.parseInt(String.valueOf(graphEndLimitEt.getText())), selectDataSpinner.getSelectedItem().toString());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-
-        //Set field values
-        Time timeRan = Calculations.getTimeRan(list);
-        double totalDistance = Math.round(Calculations.getTotalDistance(list) * 100.0) / 100.0;
-        StepFreqs stepsFreq = Calculations.getStepFreqs(list);
-
-//        durationTv.setText(timeRan.toString());
-//        distanceValueTV.setText(Double.toString(totalDistance));
-//        speedValueTV.setText(Calculations.getSpeed(timeRan, totalDistance));
-//        heartbeatValue.setText(Integer.toString(Calculations.getAverageHeartRateBpm(list)));
-//        contactTimeValue.setText(Integer.toString(Calculations.getAverageContactTime(list)));
-//        flightTimeValue.setText(Long.toString(Calculations.getAverageFlightTime(list)));
-//        dutyFactorValue.setText(Double.toString(Calculations.getAverageDutyFactor(list)));
-//
-//        stepCountValue.setText(Integer.toString(Calculations.getTotalStepCount(list)));
-//        stepMinFreqValue.setText(Integer.toString(stepsFreq.getMinStepFreq()));
-//        stepMaxFreqValue.setText(Integer.toString(stepsFreq.getMaxStepFreq()));
-//        stepAvgFreqValue.setText(Integer.toString(stepsFreq.getAvgStepFreq()));
 
         testSessionBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -263,159 +168,8 @@ public class TestRun extends AppCompatActivity {
 
             public void onClick(View view) {
                 startRecordingSession();
-//                durationTv.setText(getSessionDataCSV(3, 0));
-
             }
         });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void giveFeedback(String data, int goalMinimum, int goalMaximum)
-    {
-        float underMinimum = 0;
-        float overMaximum = 0;
-        String nlData = "";
-
-        double stat;
-
-        for(int i = 0; i < this.list.size(); i++) {
-            switch (data) {
-                case "Contact time":
-                    stat = this.list.get(i).getContactTime();
-                    nlData = "contacttijd";
-                    break;
-                default:
-                    stat = this.list.get(i).getStepFrequency();
-                    nlData = "stapfrequentie";
-                    break;
-            }
-            if(stat < goalMinimum)
-            {
-                underMinimum++;
-            }
-            else if(stat > goalMaximum)
-            {
-                overMaximum++;
-            }
-        }
-
-        float underMinimumPercent = Math.round(underMinimum / list.size() * 10000f) / 100f;
-        float overMaximumPercent = Math.round(overMaximum / list.size() * 10000f) / 100f;
-
-        feedbackValue.append(String.format("Onder minimum %s%% van de tijd", underMinimumPercent));
-        feedbackValue.append(String.format("\nBoven maximum %s%% van de tijd", overMaximumPercent));
-        if(underMinimumPercent > 15 && overMaximumPercent > 15)
-        {
-            feedbackValue.append("\nProbeer een meer regelmatige stapfrequentie te krijgen");
-        }
-        else if(underMinimum > overMaximum)
-        {
-            if(underMinimumPercent > 10 && underMinimumPercent <= 20)
-            {
-                feedbackValue.append(String.format("\nProbeer je %s te verhogen", nlData));
-            }
-            else if(underMinimumPercent > 20)
-            {
-                feedbackValue.append(String.format("\nProbeer je %s regelmatig te verhogen", nlData));
-            }
-        }
-        else if(underMinimum < overMaximum)
-        {
-            if(overMaximumPercent > 10 && overMaximumPercent <= 20)
-            {
-                feedbackValue.append(String.format("\nProbeer je %s te verlagen", nlData));
-            }
-            else if(overMaximumPercent > 20)
-            {
-                feedbackValue.append(String.format("\nProbeer je %s regelmatig te verlagen", nlData));
-            }
-        }
-        else
-        {
-            feedbackValue.append(String.format("\nJe zit op een juiste %s", nlData));
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void createGraph(int startSecond, int endSecond, String data) throws ParseException {
-
-        graphData = (GraphView) findViewById(R.id.graphData);
-        series = new LineGraphSeries<DataPoint>();
-        targetSeries = new LineGraphSeries<DataPoint>();
-        GridLabelRenderer gridLabelRenderer = graphData.getGridLabelRenderer();
-        gridLabelRenderer.setHorizontalAxisTitle("Time");
-        gridLabelRenderer.setVerticalAxisTitle(data);
-
-        if(graphData.getSeries().size() > 0) {
-            graphData.removeAllSeries();
-        }
-
-
-        long x;
-        double y = 0.0;
-        Date startTime = null;
-        double intervalImplementCount = 0.0;
-        intervalGraph = 10.0;
-        ArrayList<Double> intervalList = new ArrayList<Double>();
-        for(int i = 0; i<this.list.size();i++) {
-            String[] dateSplit = new Date(this.list.get(i).getTime()).toString().split(" ");
-            String[] timeSplit = dateSplit[3].split(":");
-
-            String time = timeSplit[0] + "-" + timeSplit[1] + "-" + timeSplit[2];
-            Date currTime = new SimpleDateFormat("hh-mm-ss").parse(time);
-
-
-            if(i == 0) {
-                startTime = new SimpleDateFormat("hh-mm-ss").parse(time);
-                x = 0;
-            }
-            else {
-                long diff = currTime.getTime() - startTime.getTime();
-                x = diff / 1000; // TODO %60
-            }
-
-            switch (data) {
-                case "Step frequency":
-                    y = this.list.get(i).getStepFrequency();
-                    break;
-                case "Contact time":
-                    y = this.list.get(i).getContactTime();
-                    break;
-                case "Flight time":
-                    y = Calculations.getFlightTime(Math.toIntExact(x),this.list.get(i).getContactTime(), this.list.get(i).getSteps()); // TODO
-                    break;
-                case "Duty factor":
-                    int flighttime = Calculations.getFlightTime(Math.toIntExact(x),this.list.get(i).getContactTime(), this.list.get(i).getSteps());
-                    y = Calculations.getDutyFactor((this.list.get(i).getContactTime()), flighttime);
-                    break;
-            }
-            intervalImplementCount++;
-            if(intervalImplementCount == intervalGraph){
-                Double avg = intervalList.stream().mapToDouble(val -> val).average().orElse(0.0);
-                series.appendData(new DataPoint(x, avg), true, list.size());
-                intervalImplementCount = 0.0;
-                intervalList.clear();
-            }
-            else if(intervalImplementCount < intervalGraph){
-                intervalList.add(y);
-            }
-            if(!initialGraph){
-                if(!graphTargetET.getText().toString().equals("")){
-                    long graphTarget = Long.parseLong(String.valueOf(graphTargetET.getText()));
-                    targetSeries.appendData(new DataPoint(x, graphTarget), true ,list.size());
-                }
-            }
-        }
-
-
-        graphData.getViewport().setMinX(startSecond);
-        graphData.getViewport().setMaxX(endSecond);
-        graphData.getViewport().setXAxisBoundsManual(true);
-        if(!initialGraph){
-            targetSeries.setColor(Color.GREEN);
-            graphData.addSeries(targetSeries);
-        }
-        graphData.addSeries(series);
     }
 
 
@@ -475,8 +229,6 @@ public class TestRun extends AppCompatActivity {
 
         testSessionBtn = findViewById(R.id.testStartSessionBtn);
         testSessionBtnLabel = findViewById(R.id.lblTestSessionControl);
-        testLapActualTimeLabel = findViewById(R.id.testLapActualTime);
-        testLapTime = findViewById(R.id.testLapTime);
         testSessionBtnImage = findViewById(R.id.testSessionBtnLogo);
 
         testSessionBtn.setOnClickListener(new View.OnClickListener() {
@@ -485,8 +237,6 @@ public class TestRun extends AppCompatActivity {
 
             public void onClick(View view) {
                 startRecordingSession();
-                //durationTv.setText(getSessionDataCSV(3, 0));
-
             }
         });
 
@@ -514,9 +264,6 @@ public class TestRun extends AppCompatActivity {
         setMinStepFrequency(0);
         setMaxStepFrequency(0);
         setAverageStepFrequency(0);
-
-        setLapTime("00:00:00");
-        setActualLapTime("00:00:00.000");
     }
 
     /**
@@ -768,34 +515,6 @@ public class TestRun extends AppCompatActivity {
             }
         });
     }
-
-    /**
-     * Function to set the current time of the current lap
-     * @param lapTime current time of the lap
-     */
-    private void setLapTime(final String lapTime){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView lapView = findViewById(R.id.testLapTime);
-                lapView.setText(lapTime);
-            }
-        });
-    }
-
-    /**
-     * Function to set the current time of the current lap
-     * @param lapTime Overall time of the lap
-     */
-    private void setActualLapTime(final String lapTime){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView lapView = findViewById(R.id.testLapActualTime);
-                lapView.setText(lapTime);
-            }
-        });
-    }
     /**
      * Function to set the Heart Rate on the UI
      * @param heartRate steps as int
@@ -857,8 +576,6 @@ public class TestRun extends AppCompatActivity {
             @Override
             public void run() {
                 testSessionBtnLabel.setText(time);
-                //lapActualTimeLabel.setText(time);
-                //lapTimeLabel.setText("" + lastLapTime);
             }
         });
     }
@@ -999,15 +716,5 @@ public class TestRun extends AppCompatActivity {
 
         return sb.toString();
     }
-
-    /*
-    private void setupView(){
-
-        durationTv.setText("00:00:00");
-    }
-     */
-
-
-
 }
 
