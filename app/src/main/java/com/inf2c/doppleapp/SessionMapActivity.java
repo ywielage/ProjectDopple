@@ -400,13 +400,13 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
                 graphTargetET = (EditText) findViewById(R.id.graphTargetET);
 
                 if(graphStartLimitEt.getText().toString().matches("") || graphEndLimitEt.getText().toString().matches("") || graphIntervalET.getText().toString().matches("") || graphTargetET.getText().toString().matches("")){
-                    Toast toast=Toast.makeText(getApplicationContext(),"Vul alle gegevens in!",Toast.LENGTH_SHORT);
+                    Toast toast=Toast.makeText(getApplicationContext(),getResources().getString(R.string.warningCompleteAllData),Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
 
                 if(Float.parseFloat(graphStartLimitEt.getText().toString()) >= Float.parseFloat(graphEndLimitEt.getText().toString())){
-                    Toast toast=Toast.makeText(getApplicationContext(),"Het begin van de grafiek kan niet starten na het einde! Verander het start getal, of het einde getal!",Toast.LENGTH_LONG);
+                    Toast toast=Toast.makeText(getApplicationContext(),getResources().getString(R.string.warningStartIsSmallerOrEqualToEndGraph),Toast.LENGTH_LONG);getResources().getString(R.string.warningStartIsSmallerOrEqualToEndGraph);
                     toast.show();
                     return;
                 }

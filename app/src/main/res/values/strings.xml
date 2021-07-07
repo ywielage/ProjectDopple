@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Dopple Companion</string>
+    <string name="warningCompleteAllData">Vul alle gegevens in!</string>
+    <string name="warningStartIsSmallerOrEqualToEndGraph">Het begin van de grafiek kan niet starten na het einde! Verander het start getal, of het einde getal!</string>
 </resources>
