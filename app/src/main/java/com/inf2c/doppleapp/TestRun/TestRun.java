@@ -596,7 +596,6 @@ public class TestRun extends AppCompatActivity {
                 public void onFinish() {
                     Toast toast=Toast.makeText(getApplicationContext(),"Testsessie maximale tijd bereikt",Toast.LENGTH_SHORT);
                     toast.show();
-                    //TODO stop functie
                     testSessionBtnImage.setImageResource(R.drawable.play_icon);
                     testSessionBtn.setBackgroundResource(R.drawable.blue_round_btn);
                     sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_STOP_RECORDING));

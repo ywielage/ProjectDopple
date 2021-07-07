@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +39,7 @@ import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -397,17 +399,25 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
                 graphIntervalET = (EditText) findViewById(R.id.graphIntervalET);
                 graphTargetET = (EditText) findViewById(R.id.graphTargetET);
 
+                if(graphStartLimitEt.getText().toString().matches("") || graphEndLimitEt.getText().toString().matches("") || graphIntervalET.getText().toString().matches("") || graphTargetET.getText().toString().matches("")){
+                    Toast toast=Toast.makeText(getApplicationContext(),"Vul alle gegevens in!",Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+
+                if(Float.parseFloat(graphStartLimitEt.getText().toString()) >= Float.parseFloat(graphEndLimitEt.getText().toString())){
+                    Toast toast=Toast.makeText(getApplicationContext(),"Het begin van de grafiek kan niet starten na het einde! Verander het start getal, of het einde getal!",Toast.LENGTH_LONG);
+                    toast.show();
+                    return;
+                }
                 float targetFloat = Float.parseFloat(String.valueOf(graphTargetET.getText()));
 
-
-                if(graphStartLimitEt.getText().length() > 0 || graphEndLimitEt.getText().length() > 0 ) {
                     try {
                         setFeedback(Integer.parseInt(String.valueOf(graphTargetET.getText())), String.valueOf(selectDataSpinner.getSelectedItem().toString()));
                         createGraph(Integer.parseInt(String.valueOf(graphStartLimitEt.getText())), Integer.parseInt(String.valueOf(graphEndLimitEt.getText())), selectDataSpinner.getSelectedItem().toString());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                }
             }
         });
     }
