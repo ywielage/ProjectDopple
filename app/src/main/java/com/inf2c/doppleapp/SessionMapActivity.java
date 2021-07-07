@@ -354,6 +354,9 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
                 series.appendData(new DataPoint(x, avg), true, list.size());
                 intervalImplementCount = 0.0;
                 intervalList.clear();
+                if(initialGraph && (list.size()-2) == i){
+                    endSecond = Integer.parseInt(String.valueOf(x));
+                }
             }
             else if(intervalImplementCount < intervalGraph){
                 intervalList.add(y);
@@ -365,7 +368,6 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
                 }
             }
         }
-
 
         graphData.getViewport().setMinX(startSecond);
         graphData.getViewport().setMaxX(endSecond);
