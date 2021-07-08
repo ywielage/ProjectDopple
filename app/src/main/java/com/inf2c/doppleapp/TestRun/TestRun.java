@@ -522,20 +522,20 @@ public class TestRun extends AppCompatActivity {
         });
     }
 
-    private void processStepFrequency() {
-        //verwerking
-        Integer average = 0;
-        Integer baseline = 139;
-
-        for (Integer value : stepFrequencyArray) {
-            average += value;
-        }
-
-        if(average > (baseline * 0.80)) {
-            Toast toast=Toast.makeText(getApplicationContext(),"Zo gaat het goed!",Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
+//    private void processStepFrequency() {
+//        //verwerking
+//        Integer average = 0;
+//        Integer baseline = 139;
+//
+//        for (Integer value : stepFrequencyArray) {
+//            average += value;
+//        }
+//
+//        if(average > (baseline * 0.80)) {
+//            Toast toast=Toast.makeText(getApplicationContext(),"Zo gaat het goed!",Toast.LENGTH_SHORT);
+//            toast.show();
+//        }
+//    }
     /**
      * Function to set the Heart Rate on the UI
      * @param heartRate steps as int
@@ -613,7 +613,7 @@ public class TestRun extends AppCompatActivity {
             sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_START_RECORDING));
             new CountDownTimer(300000, 10000) {
                 public void onTick(long millisUntilFinished) {
-                    processStepFrequency();
+//                    processStepFrequency();
                 }
                 public void onFinish() {
                     Toast toast=Toast.makeText(getApplicationContext(),"Testsessie maximale tijd bereikt",Toast.LENGTH_SHORT);
