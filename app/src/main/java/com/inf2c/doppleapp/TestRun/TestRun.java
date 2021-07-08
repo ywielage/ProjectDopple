@@ -532,7 +532,7 @@ public class TestRun extends AppCompatActivity {
         }
 
         if(average > (baseline * 0.80)) {
-            Toast toast=Toast.makeText(getApplicationContext(),"gaat lekker pik",Toast.LENGTH_SHORT);
+            Toast toast=Toast.makeText(getApplicationContext(),"Zo gaat het goed!",Toast.LENGTH_SHORT);
             toast.show();
         }
     }

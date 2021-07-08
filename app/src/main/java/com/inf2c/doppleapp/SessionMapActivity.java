@@ -335,7 +335,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
             }
             else {
                 long diff = currTime.getTime() - startTime.getTime();
-                x = diff / 1000; // TODO %60
+                x = diff / 1000; //
             }
 
             switch (data) {
@@ -346,7 +346,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
                     y = this.list.get(i).getContactTime();
                     break;
                 case "Flight time":
-                    y = Calculations.getFlightTime(Math.toIntExact(x),this.list.get(i).getContactTime(), this.list.get(i).getSteps()); // TODO
+                    y = Calculations.getFlightTime(Math.toIntExact(x),this.list.get(i).getContactTime(), this.list.get(i).getSteps());
                     break;
                 case "Duty factor":
                     int flighttime = Calculations.getFlightTime(Math.toIntExact(x),this.list.get(i).getContactTime(), this.list.get(i).getSteps());
