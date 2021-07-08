@@ -3,17 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="0dp">
 
-    <com.jjoe64.graphview.GraphView
-        android:id="@+id/graphDataZoomed"
-        android:layout_width="212dp"
-        android:layout_height="251dp"
-        android:rotation="90"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minWidth="200dp"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:gravity="center_vertical">
 
-    </com.jjoe64.graphview.GraphView>
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graphDataZoomed"
+            android:layout_width="204dp"
+            android:layout_height="200dp"
+            android:rotation="90">
+
+        </com.jjoe64.graphview.GraphView>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
