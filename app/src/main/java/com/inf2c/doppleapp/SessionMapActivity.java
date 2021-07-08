@@ -252,7 +252,9 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
 
         feedbackValue.setText("");
         feedbackValue.append(String.format("Onder minimum\n%s%%\nvan de tijd", underMinimumPercent));
+        feedbackValue2.setText("");
         feedbackValue2.append(String.format("Boven maximum\n%s%%\nvan de tijd", overMaximumPercent));
+        feedbackValue3.setText("");
         feedbackValue3.append(getFeedbackString(underMinimumPercent, overMaximumPercent, nlData));
     }
 
