@@ -61,6 +61,8 @@ public class TestRun extends AppCompatActivity {
 
     private final static String TAG = TestRun.class.getSimpleName();
 
+    private ArrayList<Integer> stepFrequencyArray = new ArrayList<>();
+
     //connection variables
     private String BLEDeviceName = "";
     private String BLEAddress = "";
@@ -160,7 +162,7 @@ public class TestRun extends AppCompatActivity {
         stepMinFreqValue = (TextView) findViewById(R.id.Testminstepfreq_value);
         stepMaxFreqValue = (TextView) findViewById(R.id.TestMaxstepfreq_value);
         stepAvgFreqValue = (TextView) findViewById(R.id.TestAvgstepfreq_value);
-        feedbackValue = (TextView) findViewById(R.id.feedback_value);
+        //feedbackValue = (TextView) findViewById(R.id.feedback_value);
 
 
         testSessionBtn.setOnClickListener(new View.OnClickListener() {
@@ -467,6 +469,7 @@ public class TestRun extends AppCompatActivity {
                 TextView stepView = findViewById(R.id.contactTimeValue);
                 String contactTimeString = String.valueOf(contactTime);
                 stepView.setText(padLeftZeros(contactTimeString, 3));
+
             }
         });
     }
@@ -497,6 +500,7 @@ public class TestRun extends AppCompatActivity {
                 TextView stepView = findViewById(R.id.TestMaxstepfreq_value);
                 String maxStepFreqString = String.valueOf(maxStepFrequency);
                 stepView.setText(padLeftZeros(maxStepFreqString, 3));
+
             }
         });
     }
@@ -513,8 +517,24 @@ public class TestRun extends AppCompatActivity {
                 TextView stepView = findViewById(R.id.TestAvgstepfreq_value);
                 String avgStepFreqString = String.valueOf(avgStepFrequency);
                 stepView.setText(padLeftZeros(avgStepFreqString, 3));
+                stepFrequencyArray.add(avgStepFrequency);
             }
         });
+    }
+
+    private void processStepFrequency() {
+        //verwerking
+        Integer average = 0;
+        Integer baseline = 139;
+
+        for (Integer value : stepFrequencyArray) {
+            average += value;
+        }
+
+        if(average > (baseline * 0.80)) {
+            Toast toast=Toast.makeText(getApplicationContext(),"gaat lekker pik",Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
     /**
      * Function to set the Heart Rate on the UI
@@ -591,8 +611,10 @@ public class TestRun extends AppCompatActivity {
             testSessionBtnImage.setImageResource(R.drawable.stop_icon_2);
             testSessionBtn.setBackgroundResource(R.drawable.red_round_btn);
             sendBroadcast(new Intent(BLEConnectionService.DOPPLE_SERVICE_EVENT_START_RECORDING));
-            new CountDownTimer(300000, 10) {
-                public void onTick(long millisUntilFinished) {}
+            new CountDownTimer(300000, 10000) {
+                public void onTick(long millisUntilFinished) {
+                    processStepFrequency();
+                }
                 public void onFinish() {
                     Toast toast=Toast.makeText(getApplicationContext(),"Testsessie maximale tijd bereikt",Toast.LENGTH_SHORT);
                     toast.show();
