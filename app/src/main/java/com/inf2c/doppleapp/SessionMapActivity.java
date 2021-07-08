@@ -245,8 +245,8 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         float overMaximumPercent = Math.round(overMaximum / list.size() * 10000f) / 100f;
 
         feedbackValue.setText("");
-        feedbackValue.append(String.format("Onder minimum %s%% van de tijd", underMinimumPercent));
-        feedbackValue.append(String.format("\nBoven maximum %s%% van de tijd", overMaximumPercent));
+        feedbackValue.append(String.format("Onder minimum\n%s%%\nvan de tijd", underMinimumPercent));
+        feedbackValue.append(String.format("\n- Boven maximum\n%s%%\nvan de tijd", overMaximumPercent));
         feedbackValue.append(getFeedbackString(underMinimumPercent, overMaximumPercent, nlData));
     }
 
