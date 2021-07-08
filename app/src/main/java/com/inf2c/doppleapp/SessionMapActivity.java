@@ -39,7 +39,6 @@ import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -85,6 +84,8 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         BLEAddress = invokedIntent.getStringExtra("EXTRA_DOPPLE_DEVICE_ADDRESS");
         FileLocation = invokedIntent.getStringExtra("EXTRA_DOPPLE_FILE_LOCATION");
         FileName = invokedIntent.getStringExtra("EXTRA_DOPPLE_FILE_NAME");
+
+        graphData = (GraphView) findViewById(R.id.graphDataZoomed);
 
 
         selectDataSpinner = findViewById(R.id.selectDataSpinner);
@@ -149,6 +150,9 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         ((TextView)findViewById(R.id.filesSubTitle))
                 .setText(String.format("Om %s %s", time, timeOfDay));
     }
+
+
+
 
     private void renderGoogleMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -248,7 +252,7 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
 
         feedbackValue.setText("");
         feedbackValue.append(String.format("Onder minimum\n%s%%\nvan de tijd", underMinimumPercent));
-        feedbackValue2.append(String.format("\n- Boven maximum\n%s%%\nvan de tijd", overMaximumPercent));
+        feedbackValue2.append(String.format("Boven maximum\n%s%%\nvan de tijd", overMaximumPercent));
         feedbackValue3.append(getFeedbackString(underMinimumPercent, overMaximumPercent, nlData));
     }
 
@@ -290,7 +294,6 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createGraph(int startSecond, int endSecond, String data) throws ParseException {
 
-        graphData = (GraphView) findViewById(R.id.graphData);
         graphTargetET = (EditText) findViewById(R.id.graphTargetET);
         graphIntervalET = (EditText) findViewById(R.id.graphIntervalET);
 
@@ -422,6 +425,19 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+            }
+        });
+
+
+        graphData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent popupWindow = new Intent(getApplicationContext(), PopupGraph.class);
+                graphStartLimitEt = (EditText) findViewById(R.id.graphStartLimitEt);
+                popupWindow.putExtra("min", graphStartLimitEt.toString());
+                graphEndLimitEt = (EditText) findViewById(R.id.graphEndLimitEt);
+                popupWindow.putExtra("max", graphEndLimitEt.toString());
+                startActivity(popupWindow);
             }
         });
     }

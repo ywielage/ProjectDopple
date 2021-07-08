@@ -161,7 +161,7 @@
                     android:paddingRight="30dp">
 
                     <com.jjoe64.graphview.GraphView
-                        android:id="@+id/graphData"
+                        android:id="@+id/graphDataZoomed"
                         android:layout_width="match_parent"
                         android:layout_height="204dp">
 

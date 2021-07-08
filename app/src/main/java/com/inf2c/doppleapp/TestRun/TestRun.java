@@ -160,7 +160,6 @@ public class TestRun extends AppCompatActivity {
         stepMinFreqValue = (TextView) findViewById(R.id.Testminstepfreq_value);
         stepMaxFreqValue = (TextView) findViewById(R.id.TestMaxstepfreq_value);
         stepAvgFreqValue = (TextView) findViewById(R.id.TestAvgstepfreq_value);
-        feedbackValue = (TextView) findViewById(R.id.feedback_value);
 
 
         testSessionBtn.setOnClickListener(new View.OnClickListener() {

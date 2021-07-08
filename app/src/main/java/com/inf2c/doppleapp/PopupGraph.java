@@ -1,4 +1,4 @@
-package com.inf2c.doppleapp.TestRun;
+package com.inf2c.doppleapp;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -17,7 +17,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.io.Serializable;
 
-public class PopupGraph extends Activity implements Serializable {
+public class PopupGraph extends Activity {
 
     private GraphView graphDataZoomed;
     private LineGraphSeries<DataPoint> series;
@@ -41,7 +41,8 @@ public class PopupGraph extends Activity implements Serializable {
         graphDataZoomed = (GraphView) findViewById(R.id.graphDataZoomed);
         series = new LineGraphSeries<DataPoint>();
         series.appendData(new DataPoint(3, 5), true ,5);
-        series.appendData(new DataPoint(4, 5), true ,5);
+        series.appendData(new DataPoint(4, 7), true ,5);
+        graphDataZoomed.addSeries(series);
     }
 
 }
