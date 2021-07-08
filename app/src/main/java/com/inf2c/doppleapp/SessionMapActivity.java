@@ -216,7 +216,9 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
         int goalMaximum = targetAverage + (targetAverage / 20);
         String nlData = "";
 
-        TextView feedbackValue = findViewById(R.id.feedback_value);
+        TextView feedbackValue = findViewById(R.id.textViewOne);
+        TextView feedbackValue2 = findViewById(R.id.textViewTwo);
+        TextView feedbackValue3 = findViewById(R.id.textViewThree);
 
         double stat;
 
@@ -246,8 +248,8 @@ public class SessionMapActivity extends AppCompatActivity implements OnMapReadyC
 
         feedbackValue.setText("");
         feedbackValue.append(String.format("Onder minimum\n%s%%\nvan de tijd", underMinimumPercent));
-        feedbackValue.append(String.format("\n- Boven maximum\n%s%%\nvan de tijd", overMaximumPercent));
-        feedbackValue.append(getFeedbackString(underMinimumPercent, overMaximumPercent, nlData));
+        feedbackValue2.append(String.format("\n- Boven maximum\n%s%%\nvan de tijd", overMaximumPercent));
+        feedbackValue3.append(getFeedbackString(underMinimumPercent, overMaximumPercent, nlData));
     }
 
     private String getFeedbackString(float underMinimumPercent, float overMaximumPercent, String nlData)
